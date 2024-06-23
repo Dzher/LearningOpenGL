@@ -1,11 +1,11 @@
 #include <QtCore/qobject.h>
 #include <QtWidgets/QApplication>
-#include "dopenglwidget.h"
+#include "dpureopengl.h"
 
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
-    auto* d_widget = new DzhOpenGLWidget();
+    auto* d_widget = new DzhPureOpenGL();
     d_widget->show();
     app.exec();
 }

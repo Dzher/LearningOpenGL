@@ -1,8 +1,8 @@
 #include "dopenglwidget.h"
 
-DOpenGLWidget::DOpenGLWidget(QWidget* parent) : QOpenGLWidget(parent) {}
+DzhOpenGLWidget::DzhOpenGLWidget(QWidget* parent) : QOpenGLWidget(parent) {}
 
-void DOpenGLWidget::initializeGL()
+void DzhOpenGLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
 
@@ -32,12 +32,12 @@ void DOpenGLWidget::initializeGL()
     program.link();
 }
 
-void DOpenGLWidget::resizeGL(int w, int h)
+void DzhOpenGLWidget::resizeGL(int w, int h)
 {
     glViewport(0, 0, w, h);
 }
 
-void DOpenGLWidget::paintGL()
+void DzhOpenGLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
