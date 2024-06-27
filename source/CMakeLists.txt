@@ -1,0 +1,2 @@
+add_subdirectory(helloqtopengl)
+add_subdirectory(hellowindow)
