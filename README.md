@@ -1,0 +1,1 @@
+I want learning opengl in just a month, the project record the learning process, go ahead!
