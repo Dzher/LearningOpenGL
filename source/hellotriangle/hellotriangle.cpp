@@ -18,7 +18,7 @@ void processInput(GLFWwindow* window)
 void render()
 {
     // status set
-    glClearColor(0.5f, 0.4f, 0.1f, 0.3f);
+    glClearColor(0.2f, 0.3f, 0.3f, 0.3f);
     // status use
     glClear(GL_COLOR_BUFFER_BIT);
 }
@@ -42,12 +42,12 @@ const GLchar* fragmentShaderSource =
 void init()
 {
     glfwInit();
-    glfwWindowHint(GLFW_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_VERSION_MINOR, 5);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 }
 
-void configShaderProgram(GLuint vertex_shader, GLuint frag_shader)
+void configShaderProgram(GLuint& vertex_shader, GLuint& frag_shader)
 {
     vertex_shader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex_shader, 1, &vertexShaderSource, nullptr);
@@ -72,7 +72,7 @@ void configShaderProgram(GLuint vertex_shader, GLuint frag_shader)
     }
 }
 
-void linkShaderProgram(GLuint shader_program, GLuint vertex_shader, GLuint frag_shader)
+void linkShaderProgram(GLuint& shader_program, GLuint& vertex_shader, GLuint& frag_shader)
 {
     shader_program = glCreateProgram();
     glAttachShader(shader_program, vertex_shader);
@@ -91,7 +91,7 @@ void linkShaderProgram(GLuint shader_program, GLuint vertex_shader, GLuint frag_
     glDeleteShader(frag_shader);
 }
 
-void configAndBindObject(GLuint vao, GLuint vbo)
+void configAndBindObject(GLuint& vao, GLuint& vbo)
 {
     GLfloat vertices[] = {
         -0.5f, -0.5f, 0.0f,  // left
