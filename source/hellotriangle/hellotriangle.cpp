@@ -91,12 +91,23 @@ void linkShaderProgram(GLuint& shader_program, GLuint& vertex_shader, GLuint& fr
     glDeleteShader(frag_shader);
 }
 
-void configAndBindObject(GLuint& vao, GLuint& vbo)
+void configAndBindObject(GLuint& vao, GLuint& vbo, GLuint& ebo)
 {
-    GLfloat vertices[] = {
+    GLfloat triangle_vertices[] = {
         -0.5f, -0.5f, 0.0f,  // left
         0.5f,  -0.5f, 0.0f,  // right
         0.0f,  0.5f,  0.0f   // top
+    };
+
+    float rectangle_vertices[] = {
+        0.5f,  0.5f,  0.0f,  // top right
+        0.5f,  -0.5f, 0.0f,  // bottom right
+        -0.5f, -0.5f, 0.0f,  // bottom left
+        -0.5f, 0.5f,  0.0f   // top left
+    };
+    unsigned int rectangle_indices[] = {
+        0, 1, 3,  // first Triangle
+        1, 2, 3   // second Triangle
     };
 
     glGenVertexArrays(1, &vao);
@@ -104,7 +115,12 @@ void configAndBindObject(GLuint& vao, GLuint& vbo)
 
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    // glBufferData(GL_ARRAY_BUFFER, sizeof(triangle_vertices), triangle_vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(rectangle_vertices), rectangle_vertices, GL_STATIC_DRAW);
+
+    glGenBuffers(1, &ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(rectangle_indices), rectangle_indices, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
     glEnableVertexAttribArray(0);
@@ -143,7 +159,10 @@ int main()
 
     GLuint vao;
     GLuint vbo;
-    configAndBindObject(vao, vbo);
+    GLuint ebo;
+    configAndBindObject(vao, vbo, ebo);
+
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -152,7 +171,8 @@ int main()
 
         glUseProgram(shader_program);
         glBindVertexArray(vao);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        // glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -160,6 +180,7 @@ int main()
 
     glDeleteVertexArrays(1, &vao);
     glDeleteBuffers(1, &vbo);
+    glDeleteBuffers(1, &ebo);
     glDeleteProgram(shader_program);
 
     glfwTerminate();
