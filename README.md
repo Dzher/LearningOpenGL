@@ -4,4 +4,5 @@ Go ahead!
 
 # Learning Chapter List
 
-`2024-6-28` complete the chapter `hello window` 
+`2024-6-28` complete the chapter `hello window`
+`2024-6-30` complete the chapter `colorful shader`
