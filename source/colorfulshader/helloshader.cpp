@@ -31,28 +31,29 @@ const GLchar* greenVertexShaderSource =
 const char* greenFragmentShaderSource =
     "#version 450 core\n"
     "out vec4 FragColor;\n"
-    "uniform vec4 ourColor;\n"
+    "uniform vec4 greenColor;\n"
     "void main()\n"
     "{\n"
-    "   FragColor = ourColor;\n"
+    "   FragColor = greenColor;\n"
     "}\n\0";
 
 const GLchar* colorfulVertexShaderSource =
     "#version 450 core\n"
     "layout (location = 0) in vec3 aPos;\n"
     "layout (location = 1) in vec3 aColor;\n"
-    "out vec3 ourColor;\n"
+    "out vec3 colorfulColor;\n"
     "void main()\n"
     "{\n"
     "    gl_Position = vec4(aPos, 1.0);\n "
+    "    colorfulColor = aColor;\n"
     "}\0 ";
 const char* colorfulFragmentShaderSource =
     "#version 450 core\n"
     "out vec4 FragColor;\n"
-    "in vec3 ourColor;\n"
+    "in vec3 colorfulColor;\n"
     "void main()\n"
     "{\n"
-    "   FragColor = vec4(ourColor, 1.0f);\n"
+    "   FragColor = vec4(colorfulColor, 1.0f);\n"
     "}\n\0";
 
 void init()
@@ -136,11 +137,11 @@ void configAndBindObject(GLuint& vao, GLuint& vbo)
     glBindVertexArray(0);
 }
 
-void colorfulShader(GLuint& shader_program)
+void greenShader(GLuint& shader_program)
 {
     double current_time = glfwGetTime();
     float color_value = std::sin(current_time) / 2.0 + 0.5;
-    int vertex_color_location = glGetUniformLocation(shader_program, "ourColor");
+    int vertex_color_location = glGetUniformLocation(shader_program, "greenColor");
     glUniform4f(vertex_color_location, 0.0f, color_value, 0.0f, 1.0f);
 }
 
@@ -191,7 +192,7 @@ int main(int argc, char* argv[])
         glBindVertexArray(vao);
         if (!colorful)
         {
-            colorfulShader(shader_program);
+            greenShader(shader_program);
         }
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
