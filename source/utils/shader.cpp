@@ -1,9 +1,7 @@
 #include "shader.h"
-#include <QtGui/qopenglext.h>
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <string_view>
 
 Shader::Shader(const std::string& vertex_shader_path, const std::string& fragment_shader_path)
 {

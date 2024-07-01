@@ -1,13 +1,13 @@
 add_library(OPENGL_UTILS STATIC)
 
-set(OPENGL_UTILS_SRCS
+set(PRIVATE_SOURCE
     shader.cpp
     shader.h
 )
 
 target_sources(OPENGL_UTILS
     PRIVATE
-    ${OPENGL_UTILS_SRCS}
+    ${PRIVATE_SOURCE}
 )
 
 target_include_directories(OPENGL_UTILS PUBLIC ${CMAKE_SOURCE_DIR}/source)
