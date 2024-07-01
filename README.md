@@ -7,3 +7,7 @@ Go ahead!
 `2024-6-28` complete the chapter `hello window`
 
 `2024-6-30` complete the chapter `colorful shader`
+
+`2024-7-01` add shader class and cmake configuration
+
+`2024-7-01` complete the chapter `texture`
