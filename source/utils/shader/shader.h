@@ -10,14 +10,15 @@ namespace Utils
 class Shader
 {
 public:
-    Shader(const std::string& vertex_shader_path, const std::string& fragment_shader_path);
+    explicit Shader(const std::string& vertex_shader_path, const std::string& fragment_shader_path);
 
     void useShaderProgram();
     GLuint getShaderProgramId();
 
-    void setBoolUniform(const std::string& name, bool value);
-    void setIntUniform(const std::string& name, int value);
-    void setFloatUniform(const std::string& name, float value);
+    void setBoolUniform(const std::string& name, GLboolean value);
+    void setIntUniform(const std::string& name, GLint value);
+    void setFloatUniform(const std::string& name, GLfloat value);
+    void setMatrix4fUniform(const std::string& name, std::array<GLfloat, 4> &value);
 
 private:
     void checkShaderCompileError(GLuint shader_id, const std::string_view error_type);

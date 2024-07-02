@@ -65,19 +65,24 @@ GLuint Shader::getShaderProgramId()
     return shader_program_id_;
 }
 
-void Shader::setBoolUniform(const std::string& name, bool value)
+void Shader::setBoolUniform(const std::string& name, GLboolean value)
 {
     glUniform1i(glGetUniformLocation(shader_program_id_, name.data()), value);
 }
 
-void Shader::setIntUniform(const std::string& name, int value)
+void Shader::setIntUniform(const std::string& name, GLint value)
 {
     glUniform1i(glGetUniformLocation(shader_program_id_, name.data()), value);
 }
 
-void Shader::setFloatUniform(const std::string& name, float value)
+void Shader::setFloatUniform(const std::string& name, GLfloat value)
 {
     glUniform1f(glGetUniformLocation(shader_program_id_, name.data()), value);
+}
+
+void Shader::setMatrix4fUniform(const std::string& name, std::array<GLfloat, 4>& value)
+{
+    glUniformMatrix4fv(glGetUniformLocation(shader_program_id_, name.data()), value.size(), GL_FALSE, &value[0]);
 }
 
 void Shader::checkShaderCompileError(GLuint shader_id, const std::string_view error_type)

@@ -145,11 +145,8 @@ int main()
 
     while (!glfwWindowShouldClose(window))
     {
-
         processInput(window);
-
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        render();
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture_1);
