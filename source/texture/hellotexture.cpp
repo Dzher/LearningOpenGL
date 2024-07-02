@@ -1,7 +1,9 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 #include <iostream>
-#include "utils/shader.h"
+#include "utils/pathhelper/pathhelper.h"
+#include "utils/shader/shader.h"
+
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb/stb_image.h"
 
@@ -87,7 +89,7 @@ void configAndBindTexture(GLuint& texture)
 
     int width, height, nrChannels;
     unsigned char* data =
-        stbi_load("D:/workspace/LearningOpenGL/share/images/girl.jpg", &width, &height, &nrChannels, 0);
+        stbi_load(Utils::PathHelper::getImagePath("girl.jpg").c_str(), &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -120,8 +122,8 @@ int main()
         return -1;
     }
 
-    Shader window_shader("D:/workspace/LearningOpenGL/share/shaders/texture.vert",
-                         "D:/workspace/LearningOpenGL/share/shaders/texture.frag");
+    Utils::Shader window_shader(Utils::PathHelper::getShaderPath("texture.vert"),
+                                Utils::PathHelper::getShaderPath("texture.frag"));
 
     GLuint vao, vbo, ebo;
     configAndBindObjects(vao, vbo, ebo);

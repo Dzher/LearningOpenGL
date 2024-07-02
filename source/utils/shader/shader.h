@@ -5,6 +5,8 @@
 #include <string>
 #include <string_view>
 
+namespace Utils
+{
 class Shader
 {
 public:
@@ -24,5 +26,6 @@ private:
     static constexpr std::string_view kVertexError = "VERTEX";
     static constexpr std::string_view kFragmentError = "FRAGMENT";
 };
+}  // namespace Utils
 
 #endif

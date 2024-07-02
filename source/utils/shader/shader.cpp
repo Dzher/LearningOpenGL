@@ -3,6 +3,8 @@
 #include <iostream>
 #include <sstream>
 
+using namespace Utils;
+
 Shader::Shader(const std::string& vertex_shader_path, const std::string& fragment_shader_path)
 {
     std::string vertex_code;
