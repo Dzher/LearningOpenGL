@@ -77,7 +77,7 @@ void configAndBindObjects(GLuint& vao, GLuint& vbo, GLuint& ebo)
     glBindVertexArray(0);
 }
 
-void configAndBindTexture(GLuint& texture)
+void configAndBindTexture(GLuint& texture, const std::string& file_name, bool flip = false)
 {
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
@@ -87,9 +87,12 @@ void configAndBindTexture(GLuint& texture)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+    stbi_set_flip_vertically_on_load(flip);
+
     int width, height, nrChannels;
     unsigned char* data =
-        stbi_load(Utils::PathHelper::getImagePath("girl.jpg").c_str(), &width, &height, &nrChannels, 0);
+        stbi_load(Utils::PathHelper::getImagePath(file_name).c_str(), &width, &height, &nrChannels, 0);
+
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -128,8 +131,17 @@ int main()
     GLuint vao, vbo, ebo;
     configAndBindObjects(vao, vbo, ebo);
 
-    GLuint texture;
-    configAndBindTexture(texture);
+    GLuint texture_1, texture_2;
+    configAndBindTexture(texture_1, "girl.jpg");
+    configAndBindTexture(texture_2, "girl.jpg", true);
+
+    window_shader.useShaderProgram();
+    window_shader.setIntUniform("the_texture_0", 0);
+    window_shader.setIntUniform("the_texture_1", 1);
+
+    window_shader.setBoolUniform("normal", false);
+    window_shader.setBoolUniform("colorful", false);
+    window_shader.setBoolUniform("mixed", true);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -139,7 +151,10 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glBindTexture(GL_TEXTURE_2D, texture);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture_1);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture_2);
 
         window_shader.useShaderProgram();
         glBindVertexArray(vao);

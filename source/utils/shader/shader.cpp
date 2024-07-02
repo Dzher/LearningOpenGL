@@ -60,6 +60,11 @@ void Shader::useShaderProgram()
     glUseProgram(shader_program_id_);
 }
 
+GLuint Shader::getShaderProgramId()
+{
+    return shader_program_id_;
+}
+
 void Shader::setBoolUniform(const std::string& name, bool value)
 {
     glUniform1i(glGetUniformLocation(shader_program_id_, name.data()), value);

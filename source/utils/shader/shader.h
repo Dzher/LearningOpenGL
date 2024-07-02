@@ -13,6 +13,8 @@ public:
     Shader(const std::string& vertex_shader_path, const std::string& fragment_shader_path);
 
     void useShaderProgram();
+    GLuint getShaderProgramId();
+
     void setBoolUniform(const std::string& name, bool value);
     void setIntUniform(const std::string& name, int value);
     void setFloatUniform(const std::string& name, float value);
