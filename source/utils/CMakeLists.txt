@@ -5,6 +5,8 @@ set(PRIVATE_SOURCE
     shader/shader.h
     pathhelper/pathhelper.cpp
     pathhelper/pathhelper.h
+    common/common.cpp
+    common/common.h
 )
 
 target_sources(OPENGL_UTILS
