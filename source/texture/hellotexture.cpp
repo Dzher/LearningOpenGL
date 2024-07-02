@@ -37,7 +37,7 @@ void init()
 void configAndBindObjects(GLuint& vao, GLuint& vbo, GLuint& ebo)
 {
     GLfloat vertices[] = {
-        // positions          // colors           // texture coords
+        // positions        // colors         // texture coords
         0.5f,  0.5f,  0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,  // top right
         0.5f,  -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,  // bottom right
         -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,  // bottom left
@@ -86,7 +86,8 @@ void configAndBindTexture(GLuint& texture)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     int width, height, nrChannels;
-    unsigned char* data = stbi_load("../../share/images/girl.jpg", &width, &height, &nrChannels, 0);
+    unsigned char* data =
+        stbi_load("D:/workspace/LearningOpenGL/share/images/girl.jpg", &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -119,7 +120,8 @@ int main()
         return -1;
     }
 
-    Shader window_shader("../../share/shaders/texture.vert", "../../share/shaders/texture.frag");
+    Shader window_shader("D:/workspace/LearningOpenGL/share/shaders/texture.vert",
+                         "D:/workspace/LearningOpenGL/share/shaders/texture.frag");
 
     GLuint vao, vbo, ebo;
     configAndBindObjects(vao, vbo, ebo);
