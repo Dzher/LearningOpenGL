@@ -5,7 +5,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb/stb_image.h"
 
-using namespace Utils;
+using namespace utils;
 
 GLFWwindow* CommonFunc::initContext(std::string_view title)
 {
@@ -67,7 +67,7 @@ void CommonFunc::configAndBindTexture(GLuint& texture, const std::string& file_n
 
     int width, height, nrChannels;
     unsigned char* data =
-        stbi_load(Utils::PathHelper::getImagePath(file_name).c_str(), &width, &height, &nrChannels, 0);
+        stbi_load(utils::PathHelper::getImagePath(file_name).c_str(), &width, &height, &nrChannels, 0);
 
     if (data)
     {

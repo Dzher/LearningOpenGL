@@ -1,5 +1,4 @@
 #include "utils/common/common.h"
-#include "utils/pathhelper/pathhelper.h"
 #include "utils/shader/shader.h"
 
 #include <glm/glm.hpp>
@@ -43,17 +42,16 @@ void configAndBindObjects(GLuint& vao, GLuint& vbo, GLuint& ebo)
 
 int main()
 {
-    GLFWwindow* context = Utils::CommonFunc::initContext("Hello Transform");
-    Utils::Shader shader_program(Utils::PathHelper::getShaderPath("transform.vert"),
-                                 Utils::PathHelper::getShaderPath("transform.frag"));
+    GLFWwindow* context = utils::CommonFunc::initContext("Hello Transform");
+    utils::Shader shader_program("transform.vert", "transform.frag");
 
     GLuint vao, vbo, ebo;
     configAndBindObjects(vao, vbo, ebo);
 
     GLuint texture_0;
     GLuint texture_1;
-    Utils::CommonFunc::configAndBindTexture(texture_0, "girl.jpg");
-    Utils::CommonFunc::configAndBindTexture(texture_1, "girl.jpg", true);
+    utils::CommonFunc::configAndBindTexture(texture_0, "girl.jpg");
+    utils::CommonFunc::configAndBindTexture(texture_1, "girl.jpg", true);
 
     shader_program.useShaderProgram();
     shader_program.setIntUniform("texture_0", 0);
@@ -61,8 +59,8 @@ int main()
 
     while (!glfwWindowShouldClose(context))
     {
-        Utils::CommonFunc::render();
-        Utils::CommonFunc::processInput(context);
+        utils::CommonFunc::render();
+        utils::CommonFunc::processInput(context);
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture_0);
@@ -70,13 +68,12 @@ int main()
         glBindTexture(GL_TEXTURE_2D, texture_1);
 
         glm::mat4 transform = glm::mat4(1.0f);
-        transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+        // transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
         transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
 
         // get matrix's uniform location and set matrix
         shader_program.useShaderProgram();
-        GLuint transform_loc = glGetUniformLocation(shader_program.getShaderProgramId(), "transform");
-        glUniformMatrix4fv(transform_loc, 1, GL_FALSE, glm::value_ptr(transform));
+        shader_program.setMatrix4fUniform("transform", glm::value_ptr(transform));
 
         glBindVertexArray(vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

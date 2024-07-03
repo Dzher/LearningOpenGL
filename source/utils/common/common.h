@@ -5,7 +5,7 @@
 #include "glad/glad.h"
 #include "glfw/glfw3.h"
 
-namespace Utils
+namespace utils
 {
 class CommonFunc
 {
@@ -18,6 +18,6 @@ public:
 
     static void configAndBindTexture(GLuint& texture, const std::string& file_name, bool flip = false);
 };
-}  // namespace Utils
+}  // namespace utils
 
 #endif

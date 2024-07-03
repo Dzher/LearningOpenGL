@@ -91,7 +91,7 @@ void configAndBindTexture(GLuint& texture, const std::string& file_name, bool fl
 
     int width, height, nrChannels;
     unsigned char* data =
-        stbi_load(Utils::PathHelper::getImagePath(file_name).c_str(), &width, &height, &nrChannels, 0);
+        stbi_load(utils::PathHelper::getImagePath(file_name).c_str(), &width, &height, &nrChannels, 0);
 
     if (data)
     {
@@ -125,8 +125,8 @@ int main()
         return -1;
     }
 
-    Utils::Shader window_shader(Utils::PathHelper::getShaderPath("texture.vert"),
-                                Utils::PathHelper::getShaderPath("texture.frag"));
+    utils::Shader window_shader(utils::PathHelper::getShaderPath("texture.vert"),
+                                utils::PathHelper::getShaderPath("texture.frag"));
 
     GLuint vao, vbo, ebo;
     configAndBindObjects(vao, vbo, ebo);

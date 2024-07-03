@@ -4,7 +4,7 @@
 #include <string>
 #include <string_view>
 
-namespace Utils
+namespace utils
 {
 class PathHelper
 {
@@ -17,6 +17,6 @@ private:
     constexpr static std::string_view kImagePath = "/share/images/";
     constexpr static std::string_view kShaderPath = "/share/shaders/";
 };
-}  // namespace Utils
+}  // namespace utils
 
 #endif

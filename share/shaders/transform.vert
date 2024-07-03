@@ -9,5 +9,5 @@ uniform mat4 transform;
 
 void main() {
     gl_Position = transform * vec4(postion, 1.0);
-    out_texture_coord = vec2(texture_coord);
+    out_texture_coord = vec2(texture_coord.x, 1 - texture_coord.y);
 }

@@ -2,8 +2,9 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include "utils/pathhelper/pathhelper.h"
 
-using namespace Utils;
+using namespace utils;
 
 Shader::Shader(const std::string& vertex_shader_path, const std::string& fragment_shader_path)
 {
@@ -18,12 +19,12 @@ Shader::Shader(const std::string& vertex_shader_path, const std::string& fragmen
 
     try
     {
-        vertex_file.open(vertex_shader_path);
+        vertex_file.open(utils::PathHelper::getShaderPath(vertex_shader_path));
         std::stringstream vertex_buff;
         vertex_buff << vertex_file.rdbuf();
         vertex_code = vertex_buff.str();
 
-        fragment_file.open(fragment_shader_path);
+        fragment_file.open(utils::PathHelper::getShaderPath(fragment_shader_path));
         std::stringstream fragment_buff;
         fragment_buff << fragment_file.rdbuf();
         fragment_code = fragment_buff.str();
@@ -65,40 +66,37 @@ GLuint Shader::getShaderProgramId()
     return shader_program_id_;
 }
 
-void Shader::setBoolUniform(const std::string& name, GLboolean value)
+void Shader::setBoolUniform(const std::string& name, const GLboolean& value)
 {
     glUniform1i(glGetUniformLocation(shader_program_id_, name.data()), value);
 }
 
-void Shader::setIntUniform(const std::string& name, GLint value)
+void Shader::setIntUniform(const std::string& name, const GLint& value)
 {
     glUniform1i(glGetUniformLocation(shader_program_id_, name.data()), value);
 }
 
-void Shader::setFloatUniform(const std::string& name, GLfloat value)
+void Shader::setFloatUniform(const std::string& name, const GLfloat& value)
 {
     glUniform1f(glGetUniformLocation(shader_program_id_, name.data()), value);
 }
 
-void Shader::setMatrix4fUniform(const std::string& name, std::array<GLfloat, 4>& value)
+void Shader::setMatrix4fUniform(const std::string& name, const GLfloat* value)
 {
-    glUniformMatrix4fv(glGetUniformLocation(shader_program_id_, name.data()), value.size(), GL_FALSE, &value[0]);
+    glUniformMatrix4fv(glGetUniformLocation(shader_program_id_, name.data()), 1, GL_FALSE, value);
 }
 
 void Shader::checkShaderCompileError(GLuint shader_id, const std::string_view error_type)
 {
     int success;
-    char infoLog[512];
-    GLenum status_type;
-    std::string tips;
+    char info_log[512];
     if (error_type == kProgramError)
     {
         glGetProgramiv(shader_id, GL_LINK_STATUS, &success);
         if (!success)
         {
-            glGetProgramInfoLog(shader_id, 1024, NULL, infoLog);
-            std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << error_type << "\n"
-                      << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+            glGetProgramInfoLog(shader_id, 1024, NULL, info_log);
+            std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << error_type << std::endl << info_log << std::endl;
         }
     }
     else
@@ -106,9 +104,9 @@ void Shader::checkShaderCompileError(GLuint shader_id, const std::string_view er
         glGetShaderiv(shader_id, GL_COMPILE_STATUS, &success);
         if (!success)
         {
-            glGetShaderInfoLog(shader_id, 1024, NULL, infoLog);
-            std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << error_type << "\n"
-                      << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+            glGetShaderInfoLog(shader_id, 1024, NULL, info_log);
+            std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << error_type << std::endl
+                      << info_log << std::endl;
         }
     }
 }

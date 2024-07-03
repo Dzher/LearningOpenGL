@@ -5,7 +5,7 @@
 #include <string>
 #include <string_view>
 
-namespace Utils
+namespace utils
 {
 class Shader
 {
@@ -15,10 +15,10 @@ public:
     void useShaderProgram();
     GLuint getShaderProgramId();
 
-    void setBoolUniform(const std::string& name, GLboolean value);
-    void setIntUniform(const std::string& name, GLint value);
-    void setFloatUniform(const std::string& name, GLfloat value);
-    void setMatrix4fUniform(const std::string& name, std::array<GLfloat, 4> &value);
+    void setBoolUniform(const std::string& name, const GLboolean& value);
+    void setIntUniform(const std::string& name, const GLint& value);
+    void setFloatUniform(const std::string& name, const GLfloat& value);
+    void setMatrix4fUniform(const std::string& name, const GLfloat* value);
 
 private:
     void checkShaderCompileError(GLuint shader_id, const std::string_view error_type);
@@ -29,6 +29,6 @@ private:
     static constexpr std::string_view kVertexError = "VERTEX";
     static constexpr std::string_view kFragmentError = "FRAGMENT";
 };
-}  // namespace Utils
+}  // namespace utils
 
 #endif

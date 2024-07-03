@@ -4,7 +4,7 @@
 #include <string>
 #include "config.h"
 
-using namespace Utils;
+using namespace utils;
 
 std::string PathHelper::getRootPath(bool by_marco)
 {
