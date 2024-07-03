@@ -2,6 +2,7 @@
 #include "utils/pathhelper/pathhelper.h"
 
 #include <iostream>
+#include <string>
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb/stb_image.h"
 
@@ -47,10 +48,14 @@ void CommonFunc::processInput(GLFWwindow* window)
     }
 }
 
-void CommonFunc::render()
+void CommonFunc::render(bool enable_z_buffer)
 {
     glClearColor(0.2f, 0.3f, 0.3f, 0.3f);
     glClear(GL_COLOR_BUFFER_BIT);
+    if (enable_z_buffer)
+    {
+        glClear(GL_DEPTH_BUFFER_BIT);
+    }
 }
 
 void CommonFunc::configAndBindTexture(GLuint& texture, const std::string& file_name, bool flip)
@@ -79,4 +84,16 @@ void CommonFunc::configAndBindTexture(GLuint& texture, const std::string& file_n
         std::cout << "Failed to load texture" << std::endl;
     }
     stbi_image_free(data);
+}
+
+void CommonFunc::setTextureIndex(const GLuint& program_id, const std::string& name, GLuint index)
+{
+    glUseProgram(program_id);
+    glUniform1i(glGetUniformLocation(program_id, name.data()), index);
+}
+
+void CommonFunc::activeTexture(const GLuint& texture)
+{
+    glActiveTexture(texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
 }
