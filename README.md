@@ -1,5 +1,7 @@
 I want learning opengl in just a month, the project record the learning process.
 
+![alt text](./share/images/bigdan.jpg)
+
 Go ahead!
 
 # Learning Chapter List
