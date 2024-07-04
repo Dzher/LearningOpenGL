@@ -7,6 +7,8 @@ set(PRIVATE_SOURCE
     pathhelper/pathhelper.h
     common/common.cpp
     common/common.h
+    camera/camera.cpp
+    camera/camera.h
 )
 
 target_sources(OPENGL_UTILS

@@ -1,3 +1,4 @@
+#! /bin/sh
 CLANG_FORMAT=$(which git-clang-format 2>/dev/null)
 if [ -z "$CLANG_FORMAT" -a -d "ŞLLVM_INSTALL_DIR" ]; then
     export PATH=$PATH:$LLVM_INSTALL_DIR/bin
