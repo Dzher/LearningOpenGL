@@ -1,4 +1,6 @@
 #include "common.h"
+#include "glfw/glfw3.h"
+#include "utils/camera/camera.h"
 #include "utils/pathhelper/pathhelper.h"
 
 #include <iostream>
@@ -8,14 +10,14 @@
 
 using namespace utils;
 
-GLFWwindow* CommonFunc::initContext(std::string_view title)
+GLFWwindow* CommonFunc::initContext(std::string_view title, int width, int height)
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, title.data(), nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(width, height, title.data(), nullptr, nullptr);
 
     if (window == nullptr)
     {
@@ -35,16 +37,47 @@ GLFWwindow* CommonFunc::initContext(std::string_view title)
     return window;
 }
 
+void CommonFunc::enableZBuffer()
+{
+    glEnable(GL_DEPTH_TEST);
+}
+
 void CommonFunc::frameBufferSizeCb(GLFWwindow* window, GLsizei w, GLsizei h)
 {
     glViewport(0, 0, w, h);
 }
 
-void CommonFunc::processInput(GLFWwindow* window)
+void CommonFunc::processInput(GLFWwindow* window, Camera* camera, float delta_time)
 {
+    if (window == nullptr)
+    {
+        return;
+    }
+
     if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_ESCAPE))
     {
         glfwSetWindowShouldClose(window, true);
+    }
+
+    if (camera == nullptr || delta_time == 0)
+    {
+        return;
+    }
+    if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_W))
+    {
+        camera->processKeyboard(CameraDirect::Forward, delta_time);
+    }
+    else if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_A))
+    {
+        camera->processKeyboard(CameraDirect::Left, delta_time);
+    }
+    else if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_S))
+    {
+        camera->processKeyboard(CameraDirect::Backward, delta_time);
+    }
+    else if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_D))
+    {
+        camera->processKeyboard(CameraDirect::Right, delta_time);
     }
 }
 

@@ -3,4 +3,4 @@ set(PRIVATE_SOURCE
 )
 
 add_executable(hellotexture ${PRIVATE_SOURCE} ${GLAD_SRC})
-target_link_libraries(hellotexture GLFW OpenGL::GL OPENGL_UTILS)
+target_link_libraries(hellotexture GLFW OPENGL_UTILS)

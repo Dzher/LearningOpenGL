@@ -3,4 +3,4 @@ set(PRIVATE_SOURCE
 )
 
 add_executable(hellotriangle ${PRIVATE_SOURCE} ${GLAD_SRC})
-target_link_libraries(hellotriangle GLFW OpenGL::GL)
+target_link_libraries(hellotriangle GLFW)

@@ -3,4 +3,4 @@ set(PRIVATE_SOURCE
 )
 
 add_executable(hellotransform ${PRIVATE_SOURCE} ${GLAD_SRC})
-target_link_libraries(hellotransform GLFW OpenGL::GL OPENGL_UTILS)
+target_link_libraries(hellotransform GLFW OPENGL_UTILS)

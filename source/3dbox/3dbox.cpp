@@ -79,7 +79,7 @@ int main()
 {
     GLFWwindow* context = utils::CommonFunc::initContext("Hello 3D");
 
-    glEnable(GL_DEPTH_TEST);
+    utils::CommonFunc::enableZBuffer();
 
     utils::Shader shader_program("3dbox.vert", "3dbox.frag");
 

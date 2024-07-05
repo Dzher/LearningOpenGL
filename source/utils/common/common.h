@@ -7,13 +7,16 @@
 
 namespace utils
 {
+class Camera;
 class CommonFunc
 {
 public:
-    static GLFWwindow* initContext(std::string_view title);
+    static GLFWwindow* initContext(std::string_view title, int width = 800, int height = 600);
+    static void enableZBuffer();
 
     static void frameBufferSizeCb(GLFWwindow* window, GLsizei w, GLsizei h);
-    static void processInput(GLFWwindow* window);
+
+    static void processInput(GLFWwindow* window, Camera* camera = nullptr, float delta_time = 0);
     static void render(bool enable_z_buffer = false);
 
     static void configAndBindTexture(GLuint& texture, const std::string& file_name, bool flip = false);

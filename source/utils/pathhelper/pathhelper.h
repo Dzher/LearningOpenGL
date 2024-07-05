@@ -9,7 +9,7 @@ namespace utils
 class PathHelper
 {
 public:
-    static std::string getRootPath(bool by_marco = false);
+    static std::string getRootPath(bool by_marco = true);
     static std::string getImagePath(const std::string& file_name);
     static std::string getShaderPath(const std::string& file_name);
 

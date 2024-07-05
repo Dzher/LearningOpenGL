@@ -53,6 +53,11 @@ glm::mat4 Camera::getViewMatrix()
     return glm::lookAt(camera_position_, camera_position_ + camera_front_, camera_up_);
 }
 
+float Camera::getZoom()
+{
+    return zoom_;
+}
+
 void Camera::processKeyboard(CameraDirect direct, float delta_time)
 {
     float velocity = move_speed_ * delta_time;

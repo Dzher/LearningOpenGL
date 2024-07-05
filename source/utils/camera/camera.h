@@ -1,7 +1,7 @@
 #ifndef __UTILS_CAMERA_H__
 #define __UTILS_CAMERA_H__
 
-#include <GL/gl.h>
+#include "glad/glad.h"
 #include "glm/glm.hpp"
 
 namespace utils
@@ -29,7 +29,8 @@ public:
     void setYaw(float angle);
     void setPitch(float angle);
 
-    glm::mat4 getViewMatrix();
+    [[nodiscard]] glm::mat4 getViewMatrix();
+    [[nodiscard]] float getZoom();
 
     void processKeyboard(CameraDirect direct, float delta_time);
     void processMouseMove(float x_offset, float y_offset, GLboolean constrain_pitch = true);

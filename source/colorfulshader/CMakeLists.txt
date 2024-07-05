@@ -3,4 +3,4 @@ set(PRIVATE_SOURCE
 )
 
 add_executable(helloshader ${PRIVATE_SOURCE} ${GLAD_SRC})
-target_link_libraries(helloshader GLFW OpenGL::GL)
+target_link_libraries(helloshader GLFW)

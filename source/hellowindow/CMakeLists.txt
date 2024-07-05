@@ -3,4 +3,4 @@ set(PRIVATE_SOURCE
 )
 
 add_executable(hellowindow ${PRIVATE_SOURCE} ${GLAD_SRC})
-target_link_libraries(hellowindow GLFW OpenGL::GL)
+target_link_libraries(hellowindow GLFW)
