@@ -24,6 +24,7 @@ CameraView::CameraView(const std::string& title, int width, int height)
 CameraView::~CameraView()
 {
     delete camera_;
+    delete shader_program_;
     glDeleteVertexArrays(1, &vao_);
     glDeleteBuffers(1, &vbo_);
 }
