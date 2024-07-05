@@ -4,6 +4,7 @@ Learning OpenGL in 30 Days
 [![Static Badge](https://img.shields.io/badge/GLFW-v3.4-da282a)](https://www.glfw.org/)
 [![Static Badge](https://img.shields.io/badge/GLAD-v4.6-0ac82a)](https://glad.dav1d.de)
 [![Static Badge](https://img.shields.io/badge/OpenGL-v4.5-0aa8aa)](https://registry.khronos.org/OpenGL-Refpages/gl4/)
+[![Static Badge](https://img.shields.io/badge/GLM-v1.0.1-eab801)](https://glm.g-truc.net/0.9.8/api/index.html)
 
 
 I want learning opengl in just a month, the project record the learning process.
