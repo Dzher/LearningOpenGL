@@ -29,3 +29,8 @@ Go ahead!
 
 `2024-7-04` add the camera class and learned `vector cross multiplication`
 
+`2024-7-05` complete the chapter `camera`
+
+`2024-7-08` complete the chapter `light`
+
+
