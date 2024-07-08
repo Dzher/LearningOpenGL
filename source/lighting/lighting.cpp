@@ -2,6 +2,7 @@
 #include "glfw/glfw3.h"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
+#include "glm/fwd.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "glm/trigonometric.hpp"
 #include "utils/camera/camera.h"
@@ -9,7 +10,11 @@
 #include "utils/shader/shader.h"
 
 Lighting::Lighting(const std::string& title, int width, int height)
-    : width_(width), height_(height), previous_frame_(0.0f), delta_time_(0.0f)
+    : width_(width),
+      height_(height),
+      previous_frame_(0.0f),
+      delta_time_(0.0f),
+      light_color_{glm::vec3(1.0f, 1.0f, 1.0f)}
 {
     context_ = utils::CommonFunc::initContext(title, width, height);
     camera_ = utils::Camera::instance();
@@ -37,9 +42,11 @@ void Lighting::setMouseCb()
 
 void Lighting::run()
 {
+    utils::CommonFunc::enableZBuffer();
     configAndBindObjects();
-    int light_index = 0;
 
+    int light_index = 0;
+    double loop_start_time = glfwGetTime();
     while (!glfwWindowShouldClose(context_))
     {
         auto current_frame = (float)glfwGetTime();
@@ -51,6 +58,7 @@ void Lighting::run()
 
         cube_shader_->useShaderProgram();
         cube_shader_->setVec3Uniform("cube_color", 1.0f, 0.5f, 0.31f);
+        cube_shader_->setVec3Uniform("light_color", light_color_.x, light_color_.y, light_color_.z);
         glm::mat4 view_mat = camera_->getViewMatrix();
         cube_shader_->setMatrix4fUniform("view_mat", glm::value_ptr(view_mat));
 
@@ -65,11 +73,13 @@ void Lighting::run()
             {
                 light_shader_->useShaderProgram();
 
-                light_shader_->setVec3Uniform("light_color", 1.0f, 1.0f, 1.0f);
+                light_shader_->setVec3Uniform("light_color", light_color_.x, light_color_.y, light_color_.z);
                 light_shader_->setMatrix4fUniform("view_mat", glm::value_ptr(view_mat));
                 light_shader_->setMatrix4fUniform("projection_mat", glm::value_ptr(projection_mat));
 
                 glm::mat4 model_mat = glm::mat4(1.0);
+                model_mat = glm::translate(model_mat, cubes_positions[index]);
+                model_mat = glm::scale(model_mat, glm::vec3(0.2f));
                 light_shader_->setMatrix4fUniform("model_mat", glm::value_ptr(model_mat));
 
                 glBindVertexArray(light_vao_);
@@ -89,8 +99,12 @@ void Lighting::run()
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
-        // TODO: give condition later
-        light_index++;
+        if (glfwGetTime() - loop_start_time > color_change_duration_)
+        {
+            light_index++;
+            loop_start_time = glfwGetTime();
+            light_color_ = glm::vec3(glm::cos(loop_start_time), glm::sin(loop_start_time), glm::tan(loop_start_time));
+        }
 
         glfwSwapBuffers(context_);
         glfwPollEvents();
@@ -114,7 +128,7 @@ void Lighting::configAndBindObjects()
     glGenVertexArrays(1, &light_vao_);
     glBindVertexArray(light_vao_);
 
-    // glBindBuffer(GL_ARRAY_BUFFER, vbo_);
-    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
-    // glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
+    glEnableVertexAttribArray(0);
 }

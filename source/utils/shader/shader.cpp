@@ -83,8 +83,7 @@ void Shader::setFloatUniform(const std::string& name, const GLfloat& value)
 
 void Shader::setVec3Uniform(const std::string& name, const GLfloat& r, const GLfloat& g, const GLfloat& b)
 {
-    const GLfloat value[] = {r, g, b};
-    glUniform3fv(glGetUniformLocation(shader_program_id_, name.data()), 3, value);
+    glUniform3f(glGetUniformLocation(shader_program_id_, name.data()), r, g, b);
 }
 
 void Shader::setMatrix4fUniform(const std::string& name, const GLfloat* value)
