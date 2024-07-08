@@ -43,6 +43,7 @@ public:
     void processKeyboard(CameraDirect direct, float delta_time);
     void processMouseMove(GLFWwindow* window, float x_pos, float y_pos);
     void processMouseScroll(GLFWwindow* window, float x_offset, float y_offset);
+    void processInput(GLFWwindow* window, float delta_time = 0);
 
 private:
     explicit Camera();

@@ -73,7 +73,7 @@ void CameraView::run()
         delta_time_ = current_frame - previous_frame_;
         previous_frame_ = current_frame;
 
-        utils::CommonFunc::processInput(context_, camera_, delta_time_);
+        camera_->processInput(context_, delta_time_);
         utils::CommonFunc::render(true);
 
         utils::CommonFunc::activeTexture(texture_);
@@ -102,4 +102,5 @@ void CameraView::run()
         glfwSwapBuffers(context_);
         glfwPollEvents();
     }
+    glfwTerminate();
 }

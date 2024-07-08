@@ -136,6 +136,40 @@ void Camera::processMouseScroll(GLFWwindow* window, float x_offset, float y_offs
     }
 }
 
+void Camera::processInput(GLFWwindow* window, float delta_time)
+{
+    if (window == nullptr)
+    {
+        return;
+    }
+
+    if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_ESCAPE))
+    {
+        glfwSetWindowShouldClose(window, true);
+    }
+
+    if (delta_time == 0)
+    {
+        return;
+    }
+    if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_W))
+    {
+        processKeyboard(CameraDirect::Forward, delta_time);
+    }
+    else if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_A))
+    {
+        processKeyboard(CameraDirect::Left, delta_time);
+    }
+    else if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_S))
+    {
+        processKeyboard(CameraDirect::Backward, delta_time);
+    }
+    else if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_D))
+    {
+        processKeyboard(CameraDirect::Right, delta_time);
+    }
+}
+
 void Camera::updateCameraVectors()
 {
     glm::vec3 new_camera_front;

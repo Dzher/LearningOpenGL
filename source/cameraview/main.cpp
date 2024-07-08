@@ -8,6 +8,5 @@ int main()
     // glfwSetInputMode(view.getContext(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     view.run();
 
-    glfwTerminate();
     return 0;
 }

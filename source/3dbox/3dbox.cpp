@@ -92,7 +92,10 @@ int main()
 
     while (!glfwWindowShouldClose(context))
     {
-        utils::CommonFunc::processInput(context);
+        if (GLFW_PRESS == glfwGetKey(context, GLFW_KEY_ESCAPE))
+        {
+            glfwSetWindowShouldClose(context, true);
+        }
         utils::CommonFunc::render(true);
 
         utils::CommonFunc::activeTexture(texture_0);

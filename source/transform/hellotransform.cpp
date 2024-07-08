@@ -60,7 +60,10 @@ int main()
     while (!glfwWindowShouldClose(context))
     {
         utils::CommonFunc::render();
-        utils::CommonFunc::processInput(context);
+        if (GLFW_PRESS == glfwGetKey(context, GLFW_KEY_ESCAPE))
+        {
+            glfwSetWindowShouldClose(context, true);
+        }
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture_0);

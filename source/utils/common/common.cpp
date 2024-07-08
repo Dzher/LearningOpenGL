@@ -47,40 +47,6 @@ void CommonFunc::frameBufferSizeCb(GLFWwindow* window, GLsizei w, GLsizei h)
     glViewport(0, 0, w, h);
 }
 
-void CommonFunc::processInput(GLFWwindow* window, Camera* camera, float delta_time)
-{
-    if (window == nullptr)
-    {
-        return;
-    }
-
-    if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_ESCAPE))
-    {
-        glfwSetWindowShouldClose(window, true);
-    }
-
-    if (camera == nullptr || delta_time == 0)
-    {
-        return;
-    }
-    if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_W))
-    {
-        camera->processKeyboard(CameraDirect::Forward, delta_time);
-    }
-    else if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_A))
-    {
-        camera->processKeyboard(CameraDirect::Left, delta_time);
-    }
-    else if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_S))
-    {
-        camera->processKeyboard(CameraDirect::Backward, delta_time);
-    }
-    else if (GLFW_PRESS == glfwGetKey(window, GLFW_KEY_D))
-    {
-        camera->processKeyboard(CameraDirect::Right, delta_time);
-    }
-}
-
 void CommonFunc::render(bool enable_z_buffer)
 {
     glClearColor(0.2f, 0.3f, 0.3f, 0.3f);
