@@ -16,10 +16,8 @@ public:
     ~CameraView();
 
     [[nodiscard]] GLFWwindow* getContext();
+    void setMouseCb();
     void run();
-
-    void mouseMoveCb(GLFWwindow* window, float x_pos, float y_pos);
-    void mouseScrollCb(GLFWwindow* window, float x_offset, float y_offset);
 
 private:
     void configAndBindObjects();
@@ -27,7 +25,7 @@ private:
 
 private:
     GLFWwindow* context_;
-    utils::Camera* camera_;
+    inline static utils::Camera* camera_;
     utils::Shader* shader_program_;
 
     int width_;
@@ -35,8 +33,6 @@ private:
 
     float previous_frame_;
     float delta_time_;
-    float old_x_pos_;
-    float old_y_pos_;
 
     GLuint vao_;
     GLuint vbo_;

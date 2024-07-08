@@ -6,21 +6,32 @@
 using namespace utils;
 
 Camera::Camera()
-    : camera_position_(0.0f, 0.0f, 0.0f),
+    : current_camera_position_(0.0f, 0.0f, 0.0f),
+      previous_camera_position_(current_camera_position_),
       camera_front_(0.0f, 0.0f, -1.0f),
       world_up_(0.0f, 1.0f, 0.0f),
       move_speed_(kMoveSpeed),
       mouse_sensitive_(kMouseSensitive),
       zoom_(kZoom),
       yaw_angle_(kYawAngle),
-      pitch_angle_(kPitchAngle)
+      pitch_angle_(kPitchAngle),
+      constrain_pitch_(true)
 {
     updateCameraVectors();
 }
 
+Camera* Camera::instance()
+{
+    if (camera_ == nullptr)
+    {
+        camera_ = new Camera();
+    }
+    return camera_;
+}
+
 void Camera::setPosition(float x, float y, float z)
 {
-    camera_position_ = glm::vec3(x, y, z);
+    current_camera_position_ = glm::vec3(x, y, z);
 }
 
 void Camera::setMoveSpeed(float speed)
@@ -48,9 +59,14 @@ void Camera::setPitch(float angle)
     pitch_angle_ = angle;
 }
 
+void Camera::setConstrainPitch(bool constrain)
+{
+    constrain_pitch_ = constrain;
+}
+
 glm::mat4 Camera::getViewMatrix()
 {
-    return glm::lookAt(camera_position_, camera_position_ + camera_front_, camera_up_);
+    return glm::lookAt(current_camera_position_, current_camera_position_ + camera_front_, camera_up_);
 }
 
 float Camera::getZoom()
@@ -64,29 +80,32 @@ void Camera::processKeyboard(CameraDirect direct, float delta_time)
     switch (direct)
     {
         case utils::CameraDirect::Backward:
-            camera_position_ += camera_front_ * velocity;
+            current_camera_position_ += camera_front_ * velocity;
             break;
         case utils::CameraDirect::Forward:
-            camera_position_ -= camera_front_ * velocity;
+            current_camera_position_ -= camera_front_ * velocity;
             break;
         case utils::CameraDirect::Left:
-            camera_position_ -= camera_right_ * velocity;
+            current_camera_position_ -= camera_right_ * velocity;
             break;
         case utils::CameraDirect::Right:
-            camera_position_ += camera_right_ * velocity;
+            current_camera_position_ += camera_right_ * velocity;
             break;
     }
 }
 
-void Camera::processMouseMove(float x_offset, float y_offset, GLboolean constrain_pitch)
+void Camera::processMouseMove(GLFWwindow* window, float x_pos, float y_pos)
 {
+    auto x_offset = previous_camera_position_.x - x_pos;
+    auto y_offset = y_pos - previous_camera_position_.y;
+
     x_offset *= mouse_sensitive_;
     y_offset *= mouse_sensitive_;
 
     yaw_angle_ += x_offset;
     pitch_angle_ += y_offset;
 
-    if (constrain_pitch)
+    if (constrain_pitch_)
     {
         if (pitch_angle_ > 89.0f)
         {
@@ -99,11 +118,14 @@ void Camera::processMouseMove(float x_offset, float y_offset, GLboolean constrai
     }
 
     updateCameraVectors();
+
+    previous_camera_position_.x = x_pos;
+    previous_camera_position_.y = y_pos;
 }
 
-void Camera::processMouseScroll(float offset)
+void Camera::processMouseScroll(GLFWwindow* window, float x_offset, float y_offset)
 {
-    zoom_ -= offset;
+    zoom_ -= y_offset;
     if (zoom_ < 1.0f)
     {
         zoom_ = 1.0f;

@@ -8,15 +8,10 @@
 #include "utils/shader/shader.h"
 
 CameraView::CameraView(const std::string& title, int width, int height)
-    : width_(width),
-      height_(height),
-      old_x_pos_(width / 2.0),
-      old_y_pos_(height / 2.0),
-      previous_frame_(0.0f),
-      delta_time_(0.0f)
+    : width_(width), height_(height), previous_frame_(0.0f), delta_time_(0.0f)
 {
     context_ = utils::CommonFunc::initContext("Camera", width_, height_);
-    camera_ = new utils::Camera();
+    camera_ = utils::Camera::instance();
     camera_->setPosition(0.0f, 0.0f, 3.0f);
     shader_program_ = new utils::Shader("3dbox.vert", "3dbox.frag");
 }
@@ -55,6 +50,14 @@ void CameraView::configAndBindTexture()
 {
     utils::CommonFunc::configAndBindTexture(texture_, "girl.jpg");
     utils::CommonFunc::setTextureIndex(shader_program_->getShaderProgramId(), "texture_0", 0);
+}
+
+void CameraView::setMouseCb()
+{
+    glfwSetCursorPosCallback(context_, [](GLFWwindow* window, double x_pos, double y_pos)
+                             { camera_->processMouseMove(window, float(x_pos), float(y_pos)); });
+    glfwSetScrollCallback(context_, [](GLFWwindow* window, double x_offset, double y_offset)
+                          { camera_->processMouseScroll(window, float(x_offset), float(y_offset)); });
 }
 
 void CameraView::run()
@@ -99,28 +102,4 @@ void CameraView::run()
         glfwSwapBuffers(context_);
         glfwPollEvents();
     }
-}
-
-void CameraView::mouseMoveCb(GLFWwindow* window, float x_pos, float y_pos)
-{
-    if (camera_ == nullptr)
-    {
-        return;
-    }
-
-    auto x_offset = old_x_pos_ - x_pos;
-    auto y_offset = y_pos - old_y_pos_;
-    camera_->processMouseMove(x_offset, y_offset);
-    old_x_pos_ = x_pos;
-    old_y_pos_ = y_pos;
-}
-
-void CameraView::mouseScrollCb(GLFWwindow* window, [[maybe_unused]] float x_offset, float y_offset)
-{
-    if (camera_ == nullptr)
-    {
-        return;
-    }
-
-    camera_->processMouseScroll(y_offset);
 }

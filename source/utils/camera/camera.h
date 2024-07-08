@@ -2,6 +2,7 @@
 #define __UTILS_CAMERA_H__
 
 #include "glad/glad.h"
+#include "glfw/glfw3.h"
 #include "glm/glm.hpp"
 
 namespace utils
@@ -18,7 +19,12 @@ enum class CameraDirect
 class Camera
 {
 public:
-    explicit Camera();
+    Camera(const Camera&) = delete;
+    Camera(Camera&&) = delete;
+    Camera& operator=(const Camera&) = delete;
+    Camera& operator=(Camera&&) = delete;
+
+    static Camera* instance();
 
     void setPosition(float x, float y, float z);
 
@@ -29,18 +35,23 @@ public:
     void setYaw(float angle);
     void setPitch(float angle);
 
+    void setConstrainPitch(bool constrain);
+
     [[nodiscard]] glm::mat4 getViewMatrix();
     [[nodiscard]] float getZoom();
 
     void processKeyboard(CameraDirect direct, float delta_time);
-    void processMouseMove(float x_offset, float y_offset, GLboolean constrain_pitch = true);
-    void processMouseScroll(float offset);
+    void processMouseMove(GLFWwindow* window, float x_pos, float y_pos);
+    void processMouseScroll(GLFWwindow* window, float x_offset, float y_offset);
 
 private:
+    explicit Camera();
     void updateCameraVectors();
 
 private:
-    glm::vec3 camera_position_;
+    inline static Camera* camera_ = nullptr;
+    glm::vec3 current_camera_position_;
+    glm::vec3 previous_camera_position_;
     glm::vec3 camera_front_;
     glm::vec3 camera_right_;
     glm::vec3 camera_up_;
@@ -52,6 +63,8 @@ private:
 
     float pitch_angle_;
     float yaw_angle_;
+
+    bool constrain_pitch_;
 
     static constexpr float kYawAngle = -90.0f;
     static constexpr float kPitchAngle = 0.0f;
