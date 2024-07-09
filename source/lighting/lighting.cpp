@@ -20,6 +20,7 @@ Lighting::Lighting(const std::string& title, int width, int height)
     camera_ = utils::Camera::instance();
     cube_shader_ = new utils::Shader("light_or_cube.vert", "just_cube.frag");
     light_shader_ = new utils::Shader("light_or_cube.vert", "just_light.frag");
+    configAndBindObjects();
 }
 
 Lighting::~Lighting()
@@ -43,7 +44,6 @@ void Lighting::setMouseCb()
 void Lighting::run()
 {
     utils::CommonFunc::enableZBuffer();
-    configAndBindObjects();
 
     int light_index = 0;
     double loop_start_time = glfwGetTime();

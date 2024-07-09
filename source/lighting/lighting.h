@@ -2,8 +2,7 @@
 #include <string>
 #include "glfw/glfw3.h"
 #include "glm/fwd.hpp"
-#include "utils/camera/camera.h"
-#include "utils/shader/shader.h"
+#include "glm/glm.hpp"
 
 namespace utils
 {
