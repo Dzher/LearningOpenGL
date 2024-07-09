@@ -92,4 +92,5 @@ private:
         -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
         // clang-format on
     };
+    static constexpr glm::vec3 light_position_ = {1.2f, 1.0f, 2.0f};
 };
