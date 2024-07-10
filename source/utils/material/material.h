@@ -47,6 +47,11 @@ class MaterialFactory
 public:
     MaterialFactory(KindsOfMaterial material_kind);
 
+    inline Material getMaterial()
+    {
+        return material_;
+    }
+
 private:
     Material material_;
     KindsOfMaterial kind_;

@@ -71,11 +71,11 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
         }
         case KindsOfMaterial::copper:
         {
-            material_.ambient_rgb = {};
-            material_.diffuse_rgb = {};
-            material_.specular_rgb = {};
+            material_.ambient_rgb = {0.19125, 0.0735, 0.0225};
+            material_.diffuse_rgb = {0.7038, 0.27048, 0.0828};
+            material_.specular_rgb = {0.256777, 0.137622, 0.086014};
             material_.specular_shininess = 0.1;
-        }  //0.19125,0.0735,0.0225,0.7038,0.27048,0.0828,0.256777,0.137622,0.086014
+        }
         case KindsOfMaterial::gold:
         {
             material_.ambient_rgb = {0.24725, 0.1995, 0.0745};
@@ -85,25 +85,25 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
         }
         case KindsOfMaterial::silver:
         {
-            material_.ambient_rgb = {};
-            material_.diffuse_rgb = {};
-            material_.specular_rgb = {};
+            material_.ambient_rgb = {0.19225, 0.19225, 0.19225};
+            material_.diffuse_rgb = {0.50754, 0.50754, 0.50754};
+            material_.specular_rgb = {0.508273, 0.508273, 0.508273};
             material_.specular_shininess = 0.4;
-        }  //0.19225,0.19225,0.19225,0.50754,0.50754,0.50754,0.508273,0.508273,0.508273
+        }
         case KindsOfMaterial::blackPlastic:
         {
             material_.ambient_rgb = {0.0, 0.0, 0.0};
-            material_.diffuse_rgb = {};
-            material_.specular_rgb = {};
+            material_.diffuse_rgb = {0.01, 0.01, 0.01};
+            material_.specular_rgb = {0.50, 0.50, 0.50};
             material_.specular_shininess = .25;
-        }  //0.01,0.01,0.01,0.50,0.50,0.50
+        }
         case KindsOfMaterial::cyanPlastic:
         {
-            material_.ambient_rgb = {};
-            material_.diffuse_rgb = {};
-            material_.specular_rgb = {};
+            material_.ambient_rgb = {0.0, 0.1, 0.06};
+            material_.diffuse_rgb = {0.0, 0.50980392, 0.50980392};
+            material_.specular_rgb = {0.50196078, 0.50196078, 0.50196078};
             material_.specular_shininess = .25;
-        }  //0.0,0.1,0.06,0.0,0.50980392,0.50980392,0.50196078,0.50196078,0.50196078
+        }
         case KindsOfMaterial::greenPlastic:
         {
             material_.ambient_rgb = {0.0, 0.0, 0.0};
