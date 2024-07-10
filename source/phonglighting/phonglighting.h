@@ -23,6 +23,7 @@ public:
     ~PhongLight();
 
     void setLightMode(PhongLightingMode mode);
+    void setMouseCb();
     void run();
 
 private:
@@ -40,6 +41,8 @@ private:
     int height_;
 
     glm::vec3 light_color_;
+    float previous_frame_;
+    float delta_time_;
 
     GLuint cube_vao_;
     GLuint light_vao_;

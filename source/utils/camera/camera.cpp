@@ -74,6 +74,11 @@ float Camera::getZoom()
     return zoom_;
 }
 
+glm::vec3 Camera::getPosition()
+{
+    return glm::vec3(current_camera_position_);
+}
+
 void Camera::processKeyboard(CameraDirect direct, float delta_time)
 {
     float velocity = move_speed_ * delta_time;
