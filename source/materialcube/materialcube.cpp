@@ -98,8 +98,8 @@ void MaterialCube::setupCubeShader()
     cube_shader_->setVec3Uniform("view_position", glm::value_ptr(camera_->getPosition()));
 
     cube_shader_->setVec3Uniform("light_strength.position", glm::value_ptr(light_position_));
-    cube_shader_->setVec3Uniform("light_strength.ambient_strength", 1.0, 1.0, 1.0);
-    cube_shader_->setVec3Uniform("light_strength.diffuse_strength", 1.0, 1.0, 1.0);
+    cube_shader_->setVec3Uniform("light_strength.ambient_strength", .2, .3, .5);
+    cube_shader_->setVec3Uniform("light_strength.diffuse_strength", .3, .2, .5);
     cube_shader_->setVec3Uniform("light_strength.specular_strength", 1.0, 1.0, 1.0);
 
     cube_shader_->setVec3Uniform("cube_material.ambient", glm::value_ptr(matrial_cube.ambient_rgb));
@@ -122,9 +122,10 @@ void MaterialCube::setupLightShader()
     glm::mat4 view_mat = camera_->getViewMatrix();
     glm::mat4 model_mat = glm::mat4(1.0f);
     model_mat = glm::translate(model_mat, light_position_);
+    model_mat = glm::scale(model_mat, glm::vec3(0.2f));
 
     light_shader_->useShaderProgram();
-    light_shader_->setVec3Uniform("light_color", light_color_.x, light_color_.y, light_color_.z);
+    light_shader_->setVec3Uniform("light_color", glm::value_ptr(light_color_));
 
     light_shader_->setMatrix4fUniform("projection_mat", glm::value_ptr(projection_mat));
     light_shader_->setMatrix4fUniform("view_mat", glm::value_ptr(view_mat));
