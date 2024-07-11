@@ -13,11 +13,12 @@ MaterialCube::MaterialCube(const std::string& title, int width, int height)
     : width_(width), height_(height), light_color_(glm::vec3(1.0f)), previous_frame_(0.0f), delta_time_(0.0f)
 {
     context_ = utils::CommonFunc::initContext(title, width, height);
-    glfwSetInputMode(context_, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    // glfwSetInputMode(context_, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     camera_ = utils::Camera::instance();
     cube_shader_ = new utils::Shader("material.vert", "material.frag");
     light_shader_ = new utils::Shader("light_or_cube.vert", "just_light.frag");
+    material_factory_ = new utils::MaterialFactory();
     configAndBindObjects();
 }
 
@@ -26,6 +27,7 @@ MaterialCube::~MaterialCube()
     delete camera_;
     delete cube_shader_;
     delete light_shader_;
+    delete material_factory_;
     glDeleteVertexArrays(1, &light_vao_);
     glDeleteVertexArrays(1, &cube_vao_);
     glDeleteBuffers(1, &vbo_);
@@ -90,20 +92,20 @@ void MaterialCube::setupCubeShader()
     glm::mat4 view_mat = camera_->getViewMatrix();
     glm::mat4 model_mat = glm::mat4(1.0f);
 
-    utils::MaterialFactory* the_cube = new utils::MaterialFactory(utils::KindsOfMaterial::pearl);
+    utils::Material matrial_cube = material_factory_->newMaterial(utils::KindsOfMaterial::jade);
 
     cube_shader_->useShaderProgram();
     cube_shader_->setVec3Uniform("view_position", glm::value_ptr(camera_->getPosition()));
 
     cube_shader_->setVec3Uniform("light_strength.position", glm::value_ptr(light_position_));
-    cube_shader_->setVec3Uniform("light_strength.ambient_strength", .2, .2, .2);
-    cube_shader_->setVec3Uniform("light_strength.diffuse_strength", .2, .3, .4);
+    cube_shader_->setVec3Uniform("light_strength.ambient_strength", 1.0, 1.0, 1.0);
+    cube_shader_->setVec3Uniform("light_strength.diffuse_strength", 1.0, 1.0, 1.0);
     cube_shader_->setVec3Uniform("light_strength.specular_strength", 1.0, 1.0, 1.0);
 
-    cube_shader_->setVec3Uniform("cube_material.ambient", glm::value_ptr(the_cube->getMaterial().ambient_rgb));
-    cube_shader_->setVec3Uniform("cube_material.diffuse", glm::value_ptr(the_cube->getMaterial().diffuse_rgb));
-    cube_shader_->setVec3Uniform("cube_material.specular", glm::value_ptr(the_cube->getMaterial().specular_rgb));
-    cube_shader_->setFloatUniform("cube_material.specular_shininess", the_cube->getMaterial().specular_shininess);
+    cube_shader_->setVec3Uniform("cube_material.ambient", glm::value_ptr(matrial_cube.ambient_rgb));
+    cube_shader_->setVec3Uniform("cube_material.diffuse", glm::value_ptr(matrial_cube.diffuse_rgb));
+    cube_shader_->setVec3Uniform("cube_material.specular", glm::value_ptr(matrial_cube.specular_rgb));
+    cube_shader_->setFloatUniform("cube_material.specular_shininess", matrial_cube.specular_shininess);
 
     cube_shader_->setMatrix4fUniform("projection_mat", glm::value_ptr(projection_mat));
     cube_shader_->setMatrix4fUniform("view_mat", glm::value_ptr(view_mat));

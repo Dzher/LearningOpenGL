@@ -45,12 +45,7 @@ enum class KindsOfMaterial
 class MaterialFactory
 {
 public:
-    MaterialFactory(KindsOfMaterial material_kind);
-
-    inline Material getMaterial()
-    {
-        return material_;
-    }
+    [[nodiscard]] Material newMaterial(KindsOfMaterial material_kind);
 
 private:
     Material material_;

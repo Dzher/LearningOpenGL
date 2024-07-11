@@ -7,6 +7,7 @@ namespace utils
 {
 class Camera;
 class Shader;
+class MaterialFactory;
 }  // namespace utils
 
 class MaterialCube
@@ -28,6 +29,7 @@ private:
     inline static utils::Camera* camera_;
     utils::Shader* cube_shader_;
     utils::Shader* light_shader_;
+    utils::MaterialFactory* material_factory_;
 
     int width_;
     int height_;

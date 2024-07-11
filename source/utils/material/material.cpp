@@ -2,8 +2,9 @@
 
 using namespace utils;
 
-MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material_kind)
+Material MaterialFactory::newMaterial(KindsOfMaterial material_kind)
 {
+    kind_ = material_kind;
     switch (kind_)
     {
         case KindsOfMaterial::emerald:
@@ -12,6 +13,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.07568, 0.61424, 0.07568};
             material_.specular_rgb = {0.633, 0.727811, 0.633};
             material_.specular_shininess = 0.6;
+            break;
         }
         case KindsOfMaterial::jade:
         {
@@ -19,6 +21,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.54, 0.89, 0.63};
             material_.specular_rgb = {0.316228, 0.316228, 0.316228};
             material_.specular_shininess = 0.1;
+            break;
         }
         case KindsOfMaterial::obsidian:
         {
@@ -26,6 +29,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.18275, 0.17, 0.22525};
             material_.specular_rgb = {0.332741, 0.328634, 0.346435};
             material_.specular_shininess = 0.3;
+            break;
         }
         case KindsOfMaterial::pearl:
         {
@@ -33,6 +37,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {1, 0.829, 0.829};
             material_.specular_rgb = {0.296648, 0.296648, 0.296648};
             material_.specular_shininess = 0.088;
+            break;
         }
         case KindsOfMaterial::ruby:
         {
@@ -40,6 +45,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.61424, 0.04136, 0.04136};
             material_.specular_rgb = {0.727811, 0.626959, 0.626959};
             material_.specular_shininess = 0.6;
+            break;
         }
         case KindsOfMaterial::turquoise:
         {
@@ -47,6 +53,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.396, 0.74151, 0.69102};
             material_.specular_rgb = {0.297254, 0.30829, 0.306678};
             material_.specular_shininess = 0.1;
+            break;
         }
         case KindsOfMaterial::brass:
         {
@@ -54,6 +61,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.780392, 0.568627, 0.113725};
             material_.specular_rgb = {0.992157, 0.941176, 0.807843};
             material_.specular_shininess = 0.21794872;
+            break;
         }
         case KindsOfMaterial::bronze:
         {
@@ -61,6 +69,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.714, 0.4284, 0.18144};
             material_.specular_rgb = {0.393548, 0.271906, 0.166721};
             material_.specular_shininess = 0.2;
+            break;
         }
         case KindsOfMaterial::chrome:
         {
@@ -68,6 +77,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.4, 0.4, 0.4};
             material_.specular_rgb = {0.774597, 0.774597, 0.774597};
             material_.specular_shininess = 0.6;
+            break;
         }
         case KindsOfMaterial::copper:
         {
@@ -75,6 +85,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.7038, 0.27048, 0.0828};
             material_.specular_rgb = {0.256777, 0.137622, 0.086014};
             material_.specular_shininess = 0.1;
+            break;
         }
         case KindsOfMaterial::gold:
         {
@@ -82,6 +93,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.75164, 0.60648, 0.22648};
             material_.specular_rgb = {0.628281, 0.555802, 0.366065};
             material_.specular_shininess = 0.4;
+            break;
         }
         case KindsOfMaterial::silver:
         {
@@ -89,6 +101,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.50754, 0.50754, 0.50754};
             material_.specular_rgb = {0.508273, 0.508273, 0.508273};
             material_.specular_shininess = 0.4;
+            break;
         }
         case KindsOfMaterial::blackPlastic:
         {
@@ -96,6 +109,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.01, 0.01, 0.01};
             material_.specular_rgb = {0.50, 0.50, 0.50};
             material_.specular_shininess = .25;
+            break;
         }
         case KindsOfMaterial::cyanPlastic:
         {
@@ -103,6 +117,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.0, 0.50980392, 0.50980392};
             material_.specular_rgb = {0.50196078, 0.50196078, 0.50196078};
             material_.specular_shininess = .25;
+            break;
         }
         case KindsOfMaterial::greenPlastic:
         {
@@ -110,6 +125,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.1, 0.35, 0.1};
             material_.specular_rgb = {0.45, 0.55, 0.45};
             material_.specular_shininess = .25;
+            break;
         }
         case KindsOfMaterial::redPlastic:
         {
@@ -117,6 +133,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.5, 0.0, 0.0};
             material_.specular_rgb = {0.7, 0.6, 0.6};
             material_.specular_shininess = .25;
+            break;
         }
         case KindsOfMaterial::whitePlastic:
         {
@@ -124,6 +141,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.55, 0.55, 0.55};
             material_.specular_rgb = {0.70, 0.70, 0.70};
             material_.specular_shininess = .25;
+            break;
         }
         case KindsOfMaterial::yellowPlastic:
         {
@@ -131,6 +149,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.5, 0.5, 0.0};
             material_.specular_rgb = {0.60, 0.60, 0.50};
             material_.specular_shininess = .25;
+            break;
         }
         case KindsOfMaterial::blackRubber:
         {
@@ -138,6 +157,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.01, 0.01, 0.01};
             material_.specular_rgb = {0.4, 0.4, 0.4};
             material_.specular_shininess = .078125;
+            break;
         }
         case KindsOfMaterial::cyanRubber:
         {
@@ -145,6 +165,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.4, 0.5, 0.5};
             material_.specular_rgb = {0.04, 0.7, 0.7};
             material_.specular_shininess = .078125;
+            break;
         }
         case KindsOfMaterial::greenRubber:
         {
@@ -152,6 +173,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.4, 0.5, 0.4};
             material_.specular_rgb = {0.04, 0.7, 0.04};
             material_.specular_shininess = .078125;
+            break;
         }
         case KindsOfMaterial::redRubber:
         {
@@ -159,6 +181,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.5, 0.4, 0.4};
             material_.specular_rgb = {0.7, 0.04, 0.04};
             material_.specular_shininess = .078125;
+            break;
         }
         case KindsOfMaterial::whiteRubber:
         {
@@ -166,6 +189,7 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.5, 0.5, 0.5};
             material_.specular_rgb = {0.7, 0.7, 0.7};
             material_.specular_shininess = .078125;
+            break;
         }
         case KindsOfMaterial::yellowRubber:
         {
@@ -173,6 +197,8 @@ MaterialFactory::MaterialFactory(KindsOfMaterial material_kind) : kind_(material
             material_.diffuse_rgb = {0.5, 0.5, 0.4};
             material_.specular_rgb = {0.7, 0.7, 0.04};
             material_.specular_shininess = .078125;
+            break;
         }
     }
+    return material_;
 }

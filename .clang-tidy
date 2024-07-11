@@ -1,13 +1,14 @@
 Checks: '
-  -clang-analyzer-*,
-  -llvm-*,
-  -google-*,
-  -hicpp-*,
-  -cppcoreguidelines-*,
-  -modernize-*,
-  -readability-*,
-  -bugprone-*,
-  -cert-*
+  clang-diagnostic-*,
+  clang-analyzer-*,
+  llvm-*,
+  google-*,
+  hicpp-*,
+  cppcoreguidelines-*,
+  modernize-*,
+  readability-*,
+  bugprone-*,
+  cert-*
   '
 WarningsAsErrors: ''
 HeaderFilterRegex: '.*'
