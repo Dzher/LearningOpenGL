@@ -1,11 +1,9 @@
-Learning OpenGL in 30 Days
-====
+# Learning OpenGL in 30 Days
 
 [![Static Badge](https://img.shields.io/badge/GLFW-v3.4-da282a)](https://www.glfw.org/)
 [![Static Badge](https://img.shields.io/badge/GLAD-v4.6-0ac82a)](https://glad.dav1d.de)
 [![Static Badge](https://img.shields.io/badge/OpenGL-v4.5-0aa8aa)](https://registry.khronos.org/OpenGL-Refpages/gl4/)
 [![Static Badge](https://img.shields.io/badge/GLM-v1.0.1-eab801)](https://glm.g-truc.net/0.9.8/api/index.html)
-
 
 I want learning opengl in just a month, the project record the learning process.
 
@@ -13,7 +11,7 @@ I want learning opengl in just a month, the project record the learning process.
 
 Go ahead!
 
-# Learning Chapter List
+## Learning Chapter List
 
 `2024-6-28` complete the chapter `hello window`
 
@@ -32,3 +30,9 @@ Go ahead!
 `2024-7-05` complete the chapter `camera`
 
 `2024-7-08` complete the chapter `light`
+
+`2024-7-09` complete the chapter `phonglight`
+
+`2024-7-10` add the `ambient`, `diffuse` and `specular` light of the `phonglight`
+
+`2024-7-11` add the material factory class
