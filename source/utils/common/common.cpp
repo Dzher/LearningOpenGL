@@ -17,14 +17,29 @@ GLFWwindow* CommonFunc::initContext(std::string_view title, int width, int heigh
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(width, height, title.data(), nullptr, nullptr);
+    int monitor_count;
+    GLFWmonitor** monitor_list = glfwGetMonitors(&monitor_count);
+    GLFWmonitor* the_display_monitor = monitor_count >= 2 ? monitor_list[1] : monitor_list[0];
+    if (the_display_monitor == nullptr)
+    {
+        return nullptr;
+    }
 
+    int x_pos, y_pos;
+    glfwGetMonitorPos(the_display_monitor, &x_pos, &y_pos);
+    const GLFWvidmode* monitor_mode = glfwGetVideoMode(the_display_monitor);
+    int monitor_dpi_x = monitor_mode->width;
+    int monitor_dpi_y = monitor_mode->height;
+
+    GLFWwindow* window = glfwCreateWindow(width, height, title.data(), nullptr, nullptr);
     if (window == nullptr)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         return nullptr;
     }
+
+    glfwSetWindowPos(window, x_pos + (monitor_dpi_x - width) / 2, y_pos + (monitor_dpi_y - height) / 2);
     glfwMakeContextCurrent(window);
 
     glfwSetFramebufferSizeCallback(window, frameBufferSizeCb);
