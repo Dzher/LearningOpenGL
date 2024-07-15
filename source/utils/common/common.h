@@ -20,7 +20,7 @@ public:
 
     static void configAndBindTexture(GLuint& texture, const std::string& file_name, bool flip = false);
     static void setTextureIndex(const GLuint& program_id, const std::string& texture, GLuint index);
-    static void activeTexture(const GLuint& texture);
+    static void activeTexture(const GLuint& texture, GLenum index = GL_TEXTURE0);
 };
 }  // namespace utils
 

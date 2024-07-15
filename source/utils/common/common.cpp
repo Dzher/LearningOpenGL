@@ -106,8 +106,8 @@ void CommonFunc::setTextureIndex(const GLuint& program_id, const std::string& na
     glUniform1i(glGetUniformLocation(program_id, name.data()), index);
 }
 
-void CommonFunc::activeTexture(const GLuint& texture)
+void CommonFunc::activeTexture(const GLuint& texture, GLenum index)
 {
-    glActiveTexture(texture);
+    glActiveTexture(index);
     glBindTexture(GL_TEXTURE_2D, texture);
 }
