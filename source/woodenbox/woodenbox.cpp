@@ -20,9 +20,9 @@ WoodenBox::WoodenBox(const std::string& title, int width, int height)
     woodenbox_shader_ = new utils::Shader("woodenbox.vert", "woodenbox.frag");
 
     utils::CommonFunc::configAndBindTexture(diffuse_texture_, "woodbox.png");
-    utils::CommonFunc::setTextureIndex(woodenbox_shader_->getShaderProgramId(), "diffuse_texture", 0);
+    utils::CommonFunc::setTextureIndex(woodenbox_shader_->getShaderProgramId(), "box.diffuse_texture", 0);
     utils::CommonFunc::configAndBindTexture(specular_texture_, "woodboxspecular.png");
-    utils::CommonFunc::setTextureIndex(woodenbox_shader_->getShaderProgramId(), "specular_texture", 1);
+    utils::CommonFunc::setTextureIndex(woodenbox_shader_->getShaderProgramId(), "box.specular_texture", 1);
 
     configAndBindObjects();
 }
@@ -48,6 +48,7 @@ void WoodenBox::setMouseCb()
 void WoodenBox::run()
 {
     utils::CommonFunc::enableZBuffer();
+
     while (!glfwWindowShouldClose(context_))
     {
         auto current_frame = (float)glfwGetTime();
@@ -101,14 +102,14 @@ void WoodenBox::setupBoxShader()
     woodenbox_shader_->setMatrix4fUniform("projection", glm::value_ptr(projection));
     woodenbox_shader_->setMatrix4fUniform("view", glm::value_ptr(view));
     woodenbox_shader_->setMatrix4fUniform("model", glm::value_ptr(model));
-    woodenbox_shader_->setVec3Uniform("light.position", glm::value_ptr(light_position_));
-    woodenbox_shader_->setVec3Uniform("view_pos", glm::value_ptr(camera_->getPosition()));
 
+    woodenbox_shader_->setVec3Uniform("light.position", glm::value_ptr(light_position_));
     woodenbox_shader_->setVec3Uniform("light.ambient", 0.2f, 0.2f, 0.2f);
     woodenbox_shader_->setVec3Uniform("light.diffuse", 0.5f, 0.5f, 0.5f);
     woodenbox_shader_->setVec3Uniform("light.specular", 1.0f, 1.0f, 1.0f);
 
-    woodenbox_shader_->setFloatUniform("material.shininess", 64.0f);
+    woodenbox_shader_->setVec3Uniform("view_pos", glm::value_ptr(camera_->getPosition()));
+    woodenbox_shader_->setFloatUniform("box.shininess", 64.0f);
 
     utils::CommonFunc::activeTexture(diffuse_texture_, GL_TEXTURE0);
     utils::CommonFunc::activeTexture(specular_texture_, GL_TEXTURE1);
@@ -124,6 +125,7 @@ void WoodenBox::setupLightShader()
     glm::mat4 view = camera_->getViewMatrix();
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, light_position_);
+    model = glm::scale(model, glm::vec3(0.2f));
 
     light_shader_->useShaderProgram();
     light_shader_->setMatrix4fUniform("project_mat", glm::value_ptr(projection));
