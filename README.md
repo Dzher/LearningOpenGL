@@ -36,3 +36,5 @@ Go ahead!
 `2024-7-10` add the `ambient`, `diffuse` and `specular` light of the `phonglight`
 
 `2024-7-11` add the material factory class
+
+`2024-7-15` complete the lighting texture
