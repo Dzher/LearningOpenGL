@@ -11,13 +11,18 @@
 #include "utils/shader/shader.h"
 
 AllKindsLight::AllKindsLight(const std::string& title, int width, int height)
-    : width_(width), height_(height), light_color_(glm::vec3(1.0f)), previous_frame_(0.0f), delta_time_(0.0f)
+    : width_(width),
+      height_(height),
+      light_kind_(KindsOfLight::ParallelLight),
+      light_color_(glm::vec3(1.0f)),
+      previous_frame_(0.0f),
+      delta_time_(0.0f)
 {
     context_ = utils::CommonFunc::initContext(title, width, height);
     camera_ = utils::Camera::instance();
 
     light_shader_ = new utils::Shader("light_or_cube.vert", "just_light.frag");
-    woodenbox_shader_ = new utils::Shader("woodenbox.vert", "woodenbox.frag");
+    woodenbox_shader_ = new utils::Shader("allkindslight.vert", "allkindslight.frag");
 
     utils::CommonFunc::configAndBindTexture(diffuse_texture_, "woodbox.png");
     utils::CommonFunc::setTextureIndex(woodenbox_shader_->getShaderProgramId(), "box.diffuse_texture", 0);
@@ -96,12 +101,43 @@ void AllKindsLight::setupBoxShader()
     glm::mat4 projection =
         glm::perspective(glm::radians(camera_->getZoom()), float(width_) / float(height_), 0.1f, 100.0f);
     glm::mat4 view = camera_->getViewMatrix();
-    glm::mat4 model = glm::mat4(1.0f);
 
     woodenbox_shader_->useShaderProgram();
+
+    switch (light_kind_)
+    {
+        case KindsOfLight::ParallelLight:
+        {
+            woodenbox_shader_->setBoolUniform("is_parallel", true);
+            break;
+        }
+        case KindsOfLight::PointLight:
+        {
+            woodenbox_shader_->setBoolUniform("is_point", true);
+            break;
+        }
+        case KindsOfLight::SpotLight:
+        {
+            woodenbox_shader_->setBoolUniform("is_spot", true);
+            break;
+        }
+        case KindsOfLight::Torch:
+        {
+            woodenbox_shader_->setBoolUniform("is_torch", true);
+            break;
+        }
+    }
     woodenbox_shader_->setMatrix4fUniform("projection", glm::value_ptr(projection));
     woodenbox_shader_->setMatrix4fUniform("view", glm::value_ptr(view));
-    woodenbox_shader_->setMatrix4fUniform("model", glm::value_ptr(model));
+    float angle = 0.f;
+    for (auto each_pos : cubePositions)
+    {
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, each_pos);
+        angle += 20.0f;
+        model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+        woodenbox_shader_->setMatrix4fUniform("model", glm::value_ptr((model)));
+    }
 
     woodenbox_shader_->setVec3Uniform("light.position", glm::value_ptr(lightPosition));
     woodenbox_shader_->setVec3Uniform("light.ambient", 0.2f, 0.2f, 0.2f);
@@ -134,4 +170,9 @@ void AllKindsLight::setupLightShader()
 
     glBindVertexArray(light_vao_);
     glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+
+void AllKindsLight::setLight(KindsOfLight kind)
+{
+    light_kind_ = kind;
 }

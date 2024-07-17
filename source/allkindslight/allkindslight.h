@@ -17,7 +17,6 @@ enum class KindsOfLight
     Torch
 };
 
-
 class AllKindsLight
 {
 public:
@@ -25,6 +24,7 @@ public:
     ~AllKindsLight();
 
     void setMouseCb();
+    void setLight(KindsOfLight kind);
     void run();
 
 private:
@@ -40,6 +40,7 @@ private:
 
     int width_;
     int height_;
+    KindsOfLight light_kind_;
 
     glm::vec3 light_color_;
     float previous_frame_;
