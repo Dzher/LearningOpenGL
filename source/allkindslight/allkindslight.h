@@ -9,6 +9,15 @@ class Camera;
 class Shader;
 }  // namespace utils
 
+enum class KindsOfLight
+{
+    ParallelLight,
+    PointLight,
+    SpotLight,
+    Torch
+};
+
+
 class AllKindsLight
 {
 public:
