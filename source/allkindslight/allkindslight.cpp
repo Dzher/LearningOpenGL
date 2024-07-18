@@ -185,7 +185,7 @@ void AllKindsLight::setupLightShader()
 
     light_shader_->useShaderProgram();
     light_shader_->setVec3Uniform("light_color", glm::value_ptr(light_color_));
-    light_shader_->setMatrix4fUniform("project_mat", glm::value_ptr(projection));
+    light_shader_->setMatrix4fUniform("projection_mat", glm::value_ptr(projection));
     light_shader_->setMatrix4fUniform("view_mat", glm::value_ptr(view));
     light_shader_->setMatrix4fUniform("model_mat", glm::value_ptr(model));
 
