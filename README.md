@@ -37,4 +37,6 @@ Go ahead!
 
 `2024-7-11` add the material factory class
 
-`2024-7-15` complete the lighting texture
+`2024-7-15` complete the lighting map
+
+`2024-7-18` complete the lighting caster
