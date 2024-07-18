@@ -2,7 +2,7 @@
 
 int main()
 {
-    AllKindsLight box("Wooden Box", 800, 600);
+    AllKindsLight box("All Kinds Light", 800, 600);
 
     box.setMouseCb();
 

@@ -128,6 +128,7 @@ void WoodenBox::setupLightShader()
     model = glm::scale(model, glm::vec3(0.2f));
 
     light_shader_->useShaderProgram();
+    light_shader_->setVec3Uniform("light_color", glm::value_ptr(light_color_));
     light_shader_->setMatrix4fUniform("project_mat", glm::value_ptr(projection));
     light_shader_->setMatrix4fUniform("view_mat", glm::value_ptr(view));
     light_shader_->setMatrix4fUniform("model_mat", glm::value_ptr(model));

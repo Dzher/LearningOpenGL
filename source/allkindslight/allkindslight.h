@@ -108,4 +108,5 @@ private:
         // clang-format on
     };
     static constexpr glm::vec3 lightPosition = {1.2f, 1.0f, 2.0f};
+    static constexpr glm::vec3 lightDirection = {-0.2f, 1.0f, -0.3f};
 };
