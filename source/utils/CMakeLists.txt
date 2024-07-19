@@ -11,6 +11,8 @@ set(PRIVATE_SOURCE
     camera/camera.h
     material/material.cpp
     material/material.h
+    mesh/mesh.cpp
+    mesh/mesh.h
 )
 
 target_sources(OPENGL_UTILS
