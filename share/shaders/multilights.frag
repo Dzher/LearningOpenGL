@@ -42,39 +42,31 @@ struct SpotLight {
     vec3 specular;
 };
 
-#define NR_POINT_LIGHTS 4
-
 in vec3 o_box_fragment_position;
 in vec3 o_box_fragment_normal;
 in vec2 o_box_texture_coord;
 
+const int point_size = 4;
+
 uniform vec3 view_position;
 uniform Light direction_light;
-uniform PointLight point_lights[NR_POINT_LIGHTS];
+uniform PointLight point_lights[point_size];
 uniform SpotLight spot_light;
 uniform Box box;
 
-// function prototypes
-vec3 calcDirectionLight(Light light, vec3 normal, vec3 viewDir);
-vec3 calcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
-vec3 calcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
+vec3 calcDirectionLight(Light light, vec3 normal, vec3 view_direction);
+vec3 calcPointLight(PointLight light, vec3 normal, vec3 frag_pos, vec3 view_direction);
+vec3 calcSpotLight(SpotLight light, vec3 normal, vec3 frag_pos, vec3 view_direction);
 
-void main() {    
-    // properties
+void main() {
     vec3 box_fragment_normal = normalize(o_box_fragment_normal);
     vec3 view_direction = normalize(view_position - o_box_fragment_position);
 
-    // == =====================================================
-    // Our lighting is set up in 3 phases: directional, point lights and an optional flashlight
-    // For each phase, a calculate function is defined that calculates the corresponding color
-    // per lamp. In the main() function we take all the calculated colors and sum them up for
-    // this fragment's final color.
-    // == =====================================================
     // phase 1: directional lighting
     vec3 result = calcDirectionLight(direction_light, box_fragment_normal, view_direction);
     // phase 2: point lights
-    for(int i = 0; i < NR_POINT_LIGHTS; i++) {
-        result += calcPointLight(point_lights[i], box_fragment_normal, o_box_fragment_position, view_direction);
+    for(int index = 0; index < point_size; index++) {
+        result += calcPointLight(point_lights[index], box_fragment_normal, o_box_fragment_position, view_direction);
     }    
     // phase 3: spot light
     result += calcSpotLight(spot_light, box_fragment_normal, o_box_fragment_position, view_direction);

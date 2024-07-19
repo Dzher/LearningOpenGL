@@ -11,12 +11,7 @@
 #include "utils/shader/shader.h"
 
 MultiLights::MultiLights(const std::string& title, int width, int height)
-    : width_(width),
-      height_(height),
-      light_kind_(KindsOfLight::ParallelLight),
-      light_color_(glm::vec3(1.0f)),
-      previous_frame_(0.0f),
-      delta_time_(0.0f)
+    : width_(width), height_(height), light_color_(glm::vec3(1.0f)), previous_frame_(0.0f), delta_time_(0.0f)
 {
     context_ = utils::CommonFunc::initContext(title, width, height);
     camera_ = utils::Camera::instance();
@@ -104,54 +99,56 @@ void MultiLights::setupBoxShader()
 
     woodenbox_shader_->useShaderProgram();
 
-    switch (light_kind_)
-    {
-        case KindsOfLight::ParallelLight:
-        {
-            woodenbox_shader_->setBoolUniform("is_parallel", true);
-            woodenbox_shader_->setVec3Uniform("light.direction", glm::value_ptr(lightDirection));
-            break;
-        }
-        case KindsOfLight::PointLight:
-        {
-            woodenbox_shader_->setBoolUniform("is_point", true);
-            woodenbox_shader_->setVec3Uniform("light.position", glm::value_ptr(lightPosition));
-            woodenbox_shader_->setFloatUniform("light.constant", 1.0f);
-            woodenbox_shader_->setFloatUniform("light.linear", 0.09f);
-            woodenbox_shader_->setFloatUniform("light.quadratic", 0.032f);
-            break;
-        }
-        case KindsOfLight::SpotLight:
-        {
-            woodenbox_shader_->setBoolUniform("is_spot", true);
-            woodenbox_shader_->setVec3Uniform("light.position", glm::value_ptr(lightPosition));
-            woodenbox_shader_->setFloatUniform("light.constant", 1.0f);
-            woodenbox_shader_->setFloatUniform("light.linear", 0.09f);
-            woodenbox_shader_->setFloatUniform("light.quadratic", 0.032f);
-            woodenbox_shader_->setFloatUniform("light.cutoff", glm::cos(glm::radians(12.5f)));
-            break;
-        }
-        case KindsOfLight::Torch:
-        {
-            woodenbox_shader_->setBoolUniform("is_torch", true);
-            woodenbox_shader_->setVec3Uniform("light.position", glm::value_ptr(lightPosition));
-            woodenbox_shader_->setFloatUniform("light.constant", 1.0f);
-            woodenbox_shader_->setFloatUniform("light.linear", 0.09f);
-            woodenbox_shader_->setFloatUniform("light.quadratic", 0.032f);
-            woodenbox_shader_->setFloatUniform("light.cutoff", glm::cos(glm::radians(12.5f)));
-            woodenbox_shader_->setFloatUniform("light.outer_cutoff", glm::cos(glm::radians(17.5f)));
-            break;
-        }
-    }
-    woodenbox_shader_->setMatrix4fUniform("projection", glm::value_ptr(projection));
-    woodenbox_shader_->setMatrix4fUniform("view", glm::value_ptr(view));
+    woodenbox_shader_->setVec3Uniform("direction_light.direction", glm::value_ptr(lightDirection));
+    woodenbox_shader_->setVec3Uniform("direction_light.ambient", 0.2f, 0.2f, 0.2f);
+    woodenbox_shader_->setVec3Uniform("direction_light.diffuse", 0.5f, 0.5f, 0.5f);
+    woodenbox_shader_->setVec3Uniform("direction_light.specular", 1.0f, 1.0f, 1.0f);
 
-    woodenbox_shader_->setVec3Uniform("light.ambient", 0.2f, 0.2f, 0.2f);
-    woodenbox_shader_->setVec3Uniform("light.diffuse", 0.5f, 0.5f, 0.5f);
-    woodenbox_shader_->setVec3Uniform("light.specular", 1.0f, 1.0f, 1.0f);
+    woodenbox_shader_->setVec3Uniform("point_lights[0].position", glm::value_ptr(pointLightPositions[0]));
+    woodenbox_shader_->setVec3Uniform("point_lights[0].ambient", 0.05f, 0.05f, 0.05f);
+    woodenbox_shader_->setVec3Uniform("point_lights[0].diffuse", 0.8f, 0.8f, 0.8f);
+    woodenbox_shader_->setVec3Uniform("point_lights[0].specular", 1.0f, 1.0f, 1.0f);
+    woodenbox_shader_->setFloatUniform("point_lights[0].constant", 1.0f);
+    woodenbox_shader_->setFloatUniform("point_lights[0].linear", 0.09f);
+    woodenbox_shader_->setFloatUniform("point_lights[0].quadratic", 0.032f);
+    woodenbox_shader_->setVec3Uniform("point_lights[1].position", glm::value_ptr(pointLightPositions[1]));
+    woodenbox_shader_->setVec3Uniform("point_lights[1].ambient", 0.05f, 0.05f, 0.05f);
+    woodenbox_shader_->setVec3Uniform("point_lights[1].diffuse", 0.8f, 0.8f, 0.8f);
+    woodenbox_shader_->setVec3Uniform("point_lights[1].specular", 1.0f, 1.0f, 1.0f);
+    woodenbox_shader_->setFloatUniform("point_lights[1].constant", 1.0f);
+    woodenbox_shader_->setFloatUniform("point_lights[1].linear", 0.09f);
+    woodenbox_shader_->setFloatUniform("point_lights[1].quadratic", 0.032f);
+    woodenbox_shader_->setVec3Uniform("point_lights[2].position", glm::value_ptr(pointLightPositions[2]));
+    woodenbox_shader_->setVec3Uniform("point_lights[2].ambient", 0.05f, 0.05f, 0.05f);
+    woodenbox_shader_->setVec3Uniform("point_lights[2].diffuse", 0.8f, 0.8f, 0.8f);
+    woodenbox_shader_->setVec3Uniform("point_lights[2].specular", 1.0f, 1.0f, 1.0f);
+    woodenbox_shader_->setFloatUniform("point_lights[2].constant", 1.0f);
+    woodenbox_shader_->setFloatUniform("point_lights[2].linear", 0.09f);
+    woodenbox_shader_->setFloatUniform("point_lights[2].quadratic", 0.032f);
+    woodenbox_shader_->setVec3Uniform("point_lights[3].position", glm::value_ptr(pointLightPositions[3]));
+    woodenbox_shader_->setVec3Uniform("point_lights[3].ambient", 0.05f, 0.05f, 0.05f);
+    woodenbox_shader_->setVec3Uniform("point_lights[3].diffuse", 0.8f, 0.8f, 0.8f);
+    woodenbox_shader_->setVec3Uniform("point_lights[3].specular", 1.0f, 1.0f, 1.0f);
+    woodenbox_shader_->setFloatUniform("point_lights[3].constant", 1.0f);
+    woodenbox_shader_->setFloatUniform("point_lights[3].linear", 0.09f);
+    woodenbox_shader_->setFloatUniform("point_lights[3].quadratic", 0.032f);
+
+    woodenbox_shader_->setVec3Uniform("spot_light.position", glm::value_ptr(camera_->getPosition()));
+    woodenbox_shader_->setVec3Uniform("spot_light.direction", glm::value_ptr(camera_->getFront()));
+    woodenbox_shader_->setVec3Uniform("spot_light.ambient", 0.05f, 0.05f, 0.05f);
+    woodenbox_shader_->setVec3Uniform("spot_light.diffuse", 0.8f, 0.8f, 0.8f);
+    woodenbox_shader_->setVec3Uniform("spot_light.specular", 1.0f, 1.0f, 1.0f);
+    woodenbox_shader_->setFloatUniform("spot_light.constant", 1.0f);
+    woodenbox_shader_->setFloatUniform("spot_light.linear", 0.09f);
+    woodenbox_shader_->setFloatUniform("spot_light.quadratic", 0.032f);
+    woodenbox_shader_->setFloatUniform("spot_light.cutoff", glm::cos(glm::radians(12.5f)));
+    woodenbox_shader_->setFloatUniform("spot_light.outer_cutoff", glm::cos(glm::radians(15.0f)));
 
     woodenbox_shader_->setVec3Uniform("view_position", glm::value_ptr(camera_->getPosition()));
     woodenbox_shader_->setFloatUniform("box.shininess", 64.0f);
+
+    woodenbox_shader_->setMatrix4fUniform("projection", glm::value_ptr(projection));
+    woodenbox_shader_->setMatrix4fUniform("view", glm::value_ptr(view));
 
     utils::CommonFunc::activeTexture(diffuse_texture_, GL_TEXTURE0);
     utils::CommonFunc::activeTexture(specular_texture_, GL_TEXTURE1);
@@ -171,29 +168,22 @@ void MultiLights::setupBoxShader()
 
 void MultiLights::setupLightShader()
 {
-    if (light_kind_ == KindsOfLight::ParallelLight)
-    {
-        return;
-    }
-
     glm::mat4 projection =
         glm::perspective(glm::radians(camera_->getZoom()), float(width_) / float(height_), 0.1f, 100.0f);
     glm::mat4 view = camera_->getViewMatrix();
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, lightPosition);
-    model = glm::scale(model, glm::vec3(0.2f));
 
     light_shader_->useShaderProgram();
     light_shader_->setVec3Uniform("light_color", glm::value_ptr(light_color_));
     light_shader_->setMatrix4fUniform("projection_mat", glm::value_ptr(projection));
     light_shader_->setMatrix4fUniform("view_mat", glm::value_ptr(view));
-    light_shader_->setMatrix4fUniform("model_mat", glm::value_ptr(model));
 
     glBindVertexArray(light_vao_);
-    glDrawArrays(GL_TRIANGLES, 0, 36);
-}
-
-void MultiLights::setLight(KindsOfLight kind)
-{
-    light_kind_ = kind;
+    for (auto each_pos : pointLightPositions)
+    {
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, each_pos);
+        model = glm::scale(model, glm::vec3(0.2f));
+        light_shader_->setMatrix4fUniform("model_mat", glm::value_ptr(model));
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+    }
 }

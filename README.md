@@ -40,3 +40,5 @@ Go ahead!
 `2024-7-15` complete the lighting map
 
 `2024-7-18` complete the lighting caster
+
+`2024-7-19` complete the multiple lighting

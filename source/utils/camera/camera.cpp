@@ -76,7 +76,12 @@ float Camera::getZoom()
 
 glm::vec3 Camera::getPosition()
 {
-    return glm::vec3(current_camera_position_);
+    return current_camera_position_;
+}
+
+glm::vec3 Camera::getFront()
+{
+    return camera_front_;
 }
 
 void Camera::processKeyboard(CameraDirect direct, float delta_time)

@@ -40,6 +40,7 @@ public:
     [[nodiscard]] glm::mat4 getViewMatrix();
     [[nodiscard]] float getZoom();
     [[nodiscard]] glm::vec3 getPosition();
+    [[nodiscard]] glm::vec3 getFront();
 
     void processKeyboard(CameraDirect direct, float delta_time);
     void processMouseMove(GLFWwindow* window, float x_pos, float y_pos);
