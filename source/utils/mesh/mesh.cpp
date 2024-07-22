@@ -1,5 +1,7 @@
 #include "mesh.h"
 #include <QtGui/qopenglext.h>
+#include <string>
+#include "utils/common/common.h"
 
 using namespace utils;
 
@@ -49,4 +51,45 @@ void Mesh::initMesh()
 
 void Mesh::draw(Shader& shader)
 {
+    GLuint diffuse_suffix = 1;
+    GLuint specular_suffix = 1;
+    GLuint normal_suffix = 1;
+    GLuint height_suffix = 1;
+
+    for (int index = 0; index < textures_.size(); index++)
+    {
+        std::string texture_type = textures_[index].type;
+        std::string suffix;
+        if ("texture_diffuse" == texture_type)
+        {
+            suffix = std::to_string(diffuse_suffix);
+            diffuse_suffix++;
+        }
+        else if ("texture_specular" == texture_type)
+        {
+            suffix = std::to_string(specular_suffix);
+            specular_suffix++;
+        }
+        else if ("texture_normal" == texture_type)
+        {
+            suffix = std::to_string(normal_suffix);
+            normal_suffix++;
+        }
+        else if ("texture_height" == texture_type)
+        {
+            suffix = std::to_string(height_suffix);
+            height_suffix++;
+        }
+
+        glActiveTexture(GL_TEXTURE0 + index);
+        shader.setIntUniform(texture_type + suffix, index);
+        glBindTexture(GL_TEXTURE_2D, textures_[index].id);
+    }
+    // draw mesh
+    glBindVertexArray(vao_);
+    glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices_.size()), GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // set everything back to defaults once configured.
+    glActiveTexture(GL_TEXTURE0);
 }
