@@ -56,3 +56,14 @@ std::string PathHelper::getShaderPath(const std::string& file_name)
     }
     return shader_path;
 }
+
+std::string PathHelper::getModelPath(const std::string& file_name)
+{
+    std::string model_path = getRootPath() + kModelPath.data() + file_name;
+    if (!std::filesystem::exists(model_path))
+    {
+        std::cout << "Model path you find does not exist: " << model_path << std::endl;
+        return "";
+    }
+    return model_path;
+}

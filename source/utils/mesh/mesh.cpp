@@ -1,7 +1,6 @@
 #include "mesh.h"
 #include <QtGui/qopenglext.h>
 #include <string>
-#include "utils/common/common.h"
 
 using namespace utils;
 

@@ -13,6 +13,8 @@ set(PRIVATE_SOURCE
     material/material.h
     mesh/mesh.cpp
     mesh/mesh.h
+    model/model.cpp
+    model/model.h
 )
 
 target_sources(OPENGL_UTILS
@@ -20,6 +22,7 @@ target_sources(OPENGL_UTILS
     ${PRIVATE_SOURCE}
 )
 
+target_link_libraries(OPENGL_UTILS ${ASSIMP})
 target_include_directories(OPENGL_UTILS PUBLIC ${CMAKE_SOURCE_DIR}/source)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.in ${CMAKE_SOURCE_DIR}/include/config.h @ONLY)
