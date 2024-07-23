@@ -18,7 +18,10 @@ public:
 
 private:
     void loadModel(const std::string& model_name);
-    void drawModel(const Shader& shader);
+    void drawModel(Shader& shader);
+    void processNode(aiNode* node, const aiScene* scene);
+    Mesh processMesh(aiMesh* mesh, const aiScene* scene);
+    std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string type_name);
 
 private:
     std::vector<Texture> loaded_textures_;

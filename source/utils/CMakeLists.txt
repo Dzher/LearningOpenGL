@@ -22,7 +22,7 @@ target_sources(OPENGL_UTILS
     ${PRIVATE_SOURCE}
 )
 
-target_link_libraries(OPENGL_UTILS ${ASSIMP})
+# target_link_libraries(OPENGL_UTILS PUBLIC assimp::assimp)
 target_include_directories(OPENGL_UTILS PUBLIC ${CMAKE_SOURCE_DIR}/source)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.in ${CMAKE_SOURCE_DIR}/include/config.h @ONLY)
