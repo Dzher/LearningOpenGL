@@ -12,16 +12,16 @@
 
 using namespace utils;
 
-Model::Model(const std::string& model_name)
+Model::Model(const std::string& model_name) : model_folder_(model_name)
 {
-    loadModel(model_name);
+    loadModel();
 }
 
-void Model::loadModel(const std::string& model_name)
+void Model::loadModel()
 {
     Assimp::Importer importer;
 
-    std::string path = utils::PathHelper::getModelPath(model_name);
+    std::string path = utils::PathHelper::getModelPath(model_folder_) + '/' + model_folder_ + ".obj";
     const aiScene* scene = importer.ReadFile(
         path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
@@ -156,7 +156,7 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType 
 
         Texture texture;
         GLuint texture_id;
-        utils::CommonFunc::configAndBindTexture(texture_id, str.data);
+        utils::CommonFunc::configAndBindTexture(texture_id, str.data, false, model_folder_);
         texture.id = texture_id;
         texture.type = type_name;
         texture.path = str.data;

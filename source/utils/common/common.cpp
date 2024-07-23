@@ -72,7 +72,8 @@ void CommonFunc::render(bool enable_z_buffer)
     }
 }
 
-void CommonFunc::configAndBindTexture(GLuint& texture, const std::string& file_name, bool flip)
+void CommonFunc::configAndBindTexture(GLuint& texture, const std::string& file_name, bool flip,
+                                      const std::string& model_folder)
 {
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
@@ -85,8 +86,9 @@ void CommonFunc::configAndBindTexture(GLuint& texture, const std::string& file_n
     stbi_set_flip_vertically_on_load(flip);
 
     int width, height, nrChannels;
-    unsigned char* data =
-        stbi_load(utils::PathHelper::getImagePath(file_name).c_str(), &width, &height, &nrChannels, 0);
+    std::string path = model_folder.empty() ? utils::PathHelper::getImagePath(file_name)
+                                            : utils::PathHelper::getModelPath(model_folder) + '/' + file_name;
+    unsigned char* data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
 
     if (data)
     {

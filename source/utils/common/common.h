@@ -18,7 +18,8 @@ public:
 
     static void render(bool enable_z_buffer = false);
 
-    static void configAndBindTexture(GLuint& texture, const std::string& file_name, bool flip = false);
+    static void configAndBindTexture(GLuint& texture, const std::string& file_name, bool flip = false,
+                                     const std::string& model_folder = "");
     static void setTextureIndex(const GLuint& program_id, const std::string& texture, GLuint index);
     static void activeTexture(const GLuint& texture, GLenum index = GL_TEXTURE0);
 };

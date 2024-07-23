@@ -15,10 +15,10 @@ class Model
 {
 public:
     Model(const std::string& model_name);
+    void drawModel(Shader& shader);
 
 private:
-    void loadModel(const std::string& model_name);
-    void drawModel(Shader& shader);
+    void loadModel();
     void processNode(aiNode* node, const aiScene* scene);
     Mesh processMesh(aiMesh* mesh, const aiScene* scene);
     std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string type_name);
@@ -26,6 +26,7 @@ private:
 private:
     std::vector<Texture> loaded_textures_;
     std::vector<Mesh> meshes_;
+    std::string model_folder_;
 };
 }  // namespace utils
 
