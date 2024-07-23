@@ -16,21 +16,15 @@ FirstMode::FirstMode(const std::string& title, int width, int height)
 {
     context_ = utils::CommonFunc::initContext(title, width, height);
     camera_ = utils::Camera::instance();
-
-    light_shader_ = new utils::Shader("light_or_cube.vert", "just_light.frag");
     model_shader_ = new utils::Shader("firstmodel.vert", "firstmodel.frag");
-
     model_ = new utils::Model("nanosuit");
 }
 
 FirstMode::~FirstMode()
 {
-    delete light_shader_;
     delete model_shader_;
     delete camera_;
-    glDeleteBuffers(1, &vbo_);
-    glDeleteVertexArrays(1, &woodenbox_vao_);
-    glDeleteVertexArrays(1, &light_vao_);
+    delete model_;
 }
 
 void FirstMode::setMouseCb()
@@ -55,7 +49,6 @@ void FirstMode::run()
         camera_->processInput(context_, delta_time_);
 
         setupModelShader();
-        setupLightShader();
 
         glfwSwapBuffers(context_);
         glfwPollEvents();
@@ -77,20 +70,4 @@ void FirstMode::setupModelShader()
     model_shader_->setMatrix4fUniform("model", glm::value_ptr((model)));
 
     model_->drawModel(*model_shader_);
-}
-
-void FirstMode::setupLightShader()
-{
-    glm::mat4 projection =
-        glm::perspective(glm::radians(camera_->getZoom()), float(width_) / float(height_), 0.1f, 100.0f);
-    glm::mat4 view = camera_->getViewMatrix();
-
-    light_shader_->useShaderProgram();
-    light_shader_->setVec3Uniform("light_color", glm::value_ptr(light_color_));
-    light_shader_->setMatrix4fUniform("projection_mat", glm::value_ptr(projection));
-    light_shader_->setMatrix4fUniform("view_mat", glm::value_ptr(view));
-    light_shader_->setMatrix4fUniform("model_mat", glm::value_ptr(lightPosition));
-
-    glBindVertexArray(light_vao_);
-    glDrawArrays(GL_TRIANGLES, 0, 36);
 }
