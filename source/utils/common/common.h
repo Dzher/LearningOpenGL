@@ -17,6 +17,7 @@ public:
     static void frameBufferSizeCb(GLFWwindow* window, GLsizei w, GLsizei h);
 
     static void render(bool enable_z_buffer = false);
+    static void configDepthFunc(GLenum depth_func = GL_ALWAYS);
 
     static void configAndBindTexture(GLuint& texture, const std::string& file_name, bool flip = false,
                                      const std::string& model_folder = "");

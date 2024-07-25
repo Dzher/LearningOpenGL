@@ -72,6 +72,11 @@ void CommonFunc::render(bool enable_z_buffer)
     }
 }
 
+void CommonFunc::configDepthFunc(GLenum depth_func)
+{
+    glDepthFunc(depth_func);
+}
+
 void CommonFunc::configAndBindTexture(GLuint& texture, const std::string& file_name, bool flip,
                                       const std::string& model_folder)
 {
