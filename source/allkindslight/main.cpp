@@ -2,7 +2,7 @@
 
 int main()
 {
-    AllKindsLight box("All Kinds Light", 800, 600);
+    StencilTest box("All Kinds Light", 800, 600);
 
     box.setMouseCb();
 
