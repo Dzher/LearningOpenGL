@@ -90,7 +90,24 @@ void StencilTest::run()
         box_shader_->setMatrix4fUniform("model", glm::value_ptr(model));
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glBindVertexArray(0);
-        
+
+        // first, render pass, draw objects as normal
+        glStencilFunc(GL_ALWAYS, 1, 0xff);
+        glStencilMask(0xff);
+
+        glBindVertexArray(box_vao_);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, box_texture_);
+        model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.f));
+        box_shader_->setMatrix4fUniform("model", glm::value_ptr(model));
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+
+        // then, disable stencil writing
+        glStencilFunc(GL_NOTEQUAL, 1, 0xff);
+        glStencilMask(0x00);
+        glDisable(GL_DEPTH_TEST);
+        box_line_shader_->useShaderProgram();
+
         glfwSwapBuffers(context_);
         glfwPollEvents();
     }
