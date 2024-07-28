@@ -21,13 +21,13 @@ public:
 private:
     void configAndBindObjects();
     void setupBoxShader();
-    void setupFloorShader();
+    void setupBoxLineShader();
 
 private:
     GLFWwindow* context_;
     inline static utils::Camera* camera_;
     utils::Shader* box_shader_;
-    utils::Shader* floor_shader_;
+    utils::Shader* box_line_shader_;
 
     int width_;
     int height_;
@@ -92,8 +92,9 @@ private:
 
     };
     static constexpr float floorVertices[] = {
+        // note we set texture Coords higher than 1 (together with GL_REPEAT as texture wrapping mode).
+        // this will cause the floor texture to repeat
         // positions          // texture Coords
-        // (note we set these higher than 1 (together with GL_REPEAT as texture wrapping mode). this will cause the floor texture to repeat)
         // clang-format off
          5.0f, -0.5f,  5.0f,  2.0f, 0.0f,
         -5.0f, -0.5f,  5.0f,  0.0f, 0.0f,

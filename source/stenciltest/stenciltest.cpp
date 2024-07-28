@@ -17,20 +17,19 @@ StencilTest::StencilTest(const std::string& title, int width, int height)
     context_ = utils::CommonFunc::initContext(title, width, height);
     camera_ = utils::Camera::instance();
 
-    floor_shader_ = new utils::Shader("light_or_cube.vert", "just_light.frag");
-    box_shader_ = new utils::Shader("allkindslight.vert", "allkindslight.frag");
+    box_line_shader_ = new utils::Shader("stenciltest.vert", "stenciltest.frag");
+    box_shader_ = new utils::Shader("stenciltest.vert", "stenciltestline.frag");
 
     utils::CommonFunc::configAndBindTexture(box_texture_, "metal.png");
-    utils::CommonFunc::setTextureIndex(box_shader_->getShaderProgramId(), "box.diffuse", 0);
+    utils::CommonFunc::setTextureIndex(box_shader_->getShaderProgramId(), "the_texture", 0);
     utils::CommonFunc::configAndBindTexture(floor_texture_, "marble.png");
-    utils::CommonFunc::setTextureIndex(box_shader_->getShaderProgramId(), "box.specular", 1);
 
     configAndBindObjects();
 }
 
 StencilTest::~StencilTest()
 {
-    delete floor_shader_;
+    delete box_line_shader_;
     delete box_shader_;
     delete camera_;
     glDeleteBuffers(1, &box_vbo_);
@@ -57,6 +56,8 @@ void StencilTest::run()
     glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
     glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
+    configAndBindObjects();
+
     while (!glfwWindowShouldClose(context_))
     {
         auto current_frame = (float)glfwGetTime();
@@ -68,9 +69,28 @@ void StencilTest::run()
 
         camera_->processInput(context_, delta_time_);
 
-        setupBoxShader();
-        setupFloorShader();
+        // setupBoxShader();
+        // setupBoxLineShader();
+        box_line_shader_->useShaderProgram();
+        glm::mat4 model = glm::mat4(1.0f);
+        glm::mat4 view = camera_->getViewMatrix();
+        glm::mat4 projection =
+            glm::perspective(glm::radians(camera_->getZoom()), (float)width_ / (float)height_, 0.1f, 100.f);
+        box_line_shader_->setMatrix4fUniform("view", glm::value_ptr(view));
+        box_line_shader_->setMatrix4fUniform("projection", glm::value_ptr(projection));
 
+        box_shader_->useShaderProgram();
+        box_shader_->setMatrix4fUniform("view", glm::value_ptr(view));
+        box_shader_->setMatrix4fUniform("projection", glm::value_ptr(projection));
+
+        glStencilMask(0x00);
+
+        glBindVertexArray(floor_vao_);
+        // glBindTexture(GL_TEXTURE_2D, floor_texture_);
+        box_shader_->setMatrix4fUniform("model", glm::value_ptr(model));
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glBindVertexArray(0);
+        
         glfwSwapBuffers(context_);
         glfwPollEvents();
     }
@@ -130,7 +150,7 @@ void StencilTest::setupBoxShader()
     box_shader_->setMatrix4fUniform("model", glm::value_ptr((model)));
 }
 
-void StencilTest::setupFloorShader()
+void StencilTest::setupBoxLineShader()
 {
 
     glm::mat4 projection =
@@ -140,11 +160,11 @@ void StencilTest::setupFloorShader()
     model = glm::translate(model, lightPosition);
     model = glm::scale(model, glm::vec3(0.2f));
 
-    floor_shader_->useShaderProgram();
-    floor_shader_->setVec3Uniform("light_color", glm::value_ptr(light_color_));
-    floor_shader_->setMatrix4fUniform("projection_mat", glm::value_ptr(projection));
-    floor_shader_->setMatrix4fUniform("view_mat", glm::value_ptr(view));
-    floor_shader_->setMatrix4fUniform("model_mat", glm::value_ptr(model));
+    box_line_shader_->useShaderProgram();
+    box_line_shader_->setVec3Uniform("light_color", glm::value_ptr(light_color_));
+    box_line_shader_->setMatrix4fUniform("projection_mat", glm::value_ptr(projection));
+    box_line_shader_->setMatrix4fUniform("view_mat", glm::value_ptr(view));
+    box_line_shader_->setMatrix4fUniform("model_mat", glm::value_ptr(model));
 
     glBindVertexArray(floor_vao_);
     glDrawArrays(GL_TRIANGLES, 0, 36);
