@@ -22,7 +22,7 @@ StencilTest::StencilTest(const std::string& title, int width, int height)
 
     utils::CommonFunc::configAndBindTexture(box_texture_, "metal.png");
     utils::CommonFunc::setTextureIndex(box_shader_->getShaderProgramId(), "the_texture", 0);
-    utils::CommonFunc::configAndBindTexture(floor_texture_, "marble.png");
+    utils::CommonFunc::configAndBindTexture(floor_texture_, "marble.jpg");
 
     configAndBindObjects();
 }
@@ -71,13 +71,10 @@ void StencilTest::run()
 
         // setupBoxShader();
         // setupBoxLineShader();
-        box_line_shader_->useShaderProgram();
         glm::mat4 model = glm::mat4(1.0f);
         glm::mat4 view = camera_->getViewMatrix();
         glm::mat4 projection =
             glm::perspective(glm::radians(camera_->getZoom()), (float)width_ / (float)height_, 0.1f, 100.f);
-        box_line_shader_->setMatrix4fUniform("view", glm::value_ptr(view));
-        box_line_shader_->setMatrix4fUniform("projection", glm::value_ptr(projection));
 
         box_shader_->useShaderProgram();
         box_shader_->setMatrix4fUniform("view", glm::value_ptr(view));
@@ -106,7 +103,21 @@ void StencilTest::run()
         glStencilFunc(GL_NOTEQUAL, 1, 0xff);
         glStencilMask(0x00);
         glDisable(GL_DEPTH_TEST);
+
         box_line_shader_->useShaderProgram();
+        box_line_shader_->setMatrix4fUniform("view", glm::value_ptr(view));
+        box_line_shader_->setMatrix4fUniform("projection", glm::value_ptr(projection));
+        glBindVertexArray(box_vao_);
+        glBindTexture(GL_TEXTURE_2D, box_texture_);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-1.0f, 0.f, -1.f));
+        model = glm::scale(model, glm::vec3(1.1f, 1.1f, 1.1f));
+        box_line_shader_->setMatrix4fUniform("model", glm::value_ptr(model));
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glBindVertexArray(0);
+        glStencilMask(0xff);
+        glStencilFunc(GL_ALWAYS, 0, 0xff);
+        glEnable(GL_DEPTH_TEST);
 
         glfwSwapBuffers(context_);
         glfwPollEvents();
