@@ -44,3 +44,7 @@ Go ahead!
 `2024-7-19` complete the multiple lighting
 
 `2024-7-23` complete the model load
+
+`2024-7-25` complete the depth test
+
+`2024-7-28` complete the stencil test

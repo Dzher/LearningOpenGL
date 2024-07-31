@@ -15,6 +15,7 @@ class Model
 {
 public:
     Model(const std::string& model_name);
+
     void drawModel(Shader& shader);
 
 private:

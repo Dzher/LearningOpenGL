@@ -19,9 +19,9 @@ struct Vertex
     glm::vec3 tangent;
     // bitangent
     glm::vec3 bitangent;
-    //bone indexes which will influence this vertex
+    // bone indexes which will influence this vertex
     int m_bone_ids[kMaxBoneInfluence];
-    //weights from each bone
+    // weights from each bone
     float m_weights[kMaxBoneInfluence];
 };
 
@@ -37,6 +37,7 @@ class Mesh
 public:
     explicit Mesh(const std::vector<Vertex>& vertexes, const std::vector<unsigned int>& indices,
                   const std::vector<Texture>& textures);
+    ~Mesh();
 
     void draw(Shader& shader);
 
