@@ -17,6 +17,15 @@ public:
     Model(const std::string& model_name);
 
     void drawModel(Shader& shader);
+    inline std::vector<Texture> textures()
+    {
+        return loaded_textures_;
+    }
+
+    inline std::vector<Mesh> meshes()
+    {
+        return meshes_;
+    }
 
 private:
     void loadModel();

@@ -40,6 +40,15 @@ public:
     ~Mesh();
 
     void draw(Shader& shader);
+    inline GLuint vao()
+    {
+        return vao_;
+    }
+
+    inline std::vector<unsigned int> indices()
+    {
+        return indices_;
+    }
 
 private:
     void initMesh();

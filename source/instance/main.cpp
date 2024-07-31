@@ -4,7 +4,7 @@ int main()
 {
     glInstance instance = glInstance("Instance", 800, 600);
 
-    instance.useInstance(false);
+    instance.useInstance(true);
     instance.setMouseCb();
     instance.run();
 
