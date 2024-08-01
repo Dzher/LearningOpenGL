@@ -48,3 +48,5 @@ Go ahead!
 `2024-7-25` complete the depth test
 
 `2024-7-28` complete the stencil test
+
+`2024-8-01` complete the `blend` chapter
