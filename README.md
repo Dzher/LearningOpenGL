@@ -50,3 +50,5 @@ Go ahead!
 `2024-7-28` complete the stencil test
 
 `2024-8-01` complete the `blend` chapter
+
+`2024-8-02` complete the `face culling` chapter
