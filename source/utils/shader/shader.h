@@ -4,6 +4,7 @@
 #include <glad/glad.h>
 #include <string>
 #include <string_view>
+#include "glm/fwd.hpp"
 
 namespace utils
 {
@@ -21,6 +22,7 @@ public:
     void setVec3Uniform(const std::string& name, const GLfloat* value);
     void setVec3Uniform(const std::string& name, const GLfloat& r, const GLfloat& g, const GLfloat& b);
     void setMatrix4fUniform(const std::string& name, const GLfloat* value);
+    void setMatrix4fUniform(const std::string& name, const glm::mat4& value);
 
 private:
     void checkShaderCompileError(GLuint shader_id, const std::string_view error_type);

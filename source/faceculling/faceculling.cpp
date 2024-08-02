@@ -5,7 +5,6 @@
 #include "glfw/glfw3.h"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/fwd.hpp"
-#include "glm/gtc/type_ptr.hpp"
 #include "glm/trigonometric.hpp"
 #include "utils/camera/camera.h"
 #include "utils/common/common.h"
@@ -16,7 +15,7 @@ FaceCull::FaceCull(const std::string& title, unsigned int width, unsigned int he
 {
     context_ = utils::CommonFunc::initContext(title, width, height);
     camera_ = utils::Camera::instance();
-    camera_->setPosition(0.f, 0.f, 10.f);
+    camera_->setPosition(0.f, 0.f, 2.f);
 
     utils::CommonFunc::configAndBindTexture(texture_wooden_, "woodbox.png");
 
@@ -105,9 +104,9 @@ void FaceCull::drawCube()
         glm::mat4 model = glm::mat4(1.f);
 
         shader_->useShaderProgram();
-        shader_->setMatrix4fUniform("projection_mat", glm::value_ptr(projection));
-        shader_->setMatrix4fUniform("view_mat", glm::value_ptr(view));
-        shader_->setMatrix4fUniform("model_mat", glm::value_ptr(model));
+        shader_->setMatrix4fUniform("projection_mat", projection);
+        shader_->setMatrix4fUniform("view_mat", view);
+        shader_->setMatrix4fUniform("model_mat", model);
 
         glActiveTexture(texture_wooden_);
         glBindTexture(GL_TEXTURE_2D, texture_wooden_);

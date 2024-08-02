@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include "glm/gtc/type_ptr.hpp"
 #include "utils/pathhelper/pathhelper.h"
 
 using namespace utils;
@@ -97,6 +98,11 @@ void Shader::setVec3Uniform(const std::string& name, const GLfloat& r, const GLf
 void Shader::setMatrix4fUniform(const std::string& name, const GLfloat* value)
 {
     glUniformMatrix4fv(glGetUniformLocation(shader_program_id_, name.data()), 1, GL_FALSE, value);
+}
+
+void Shader::setMatrix4fUniform(const std::string& name, const glm::mat4& value)
+{
+    glUniformMatrix4fv(glGetUniformLocation(shader_program_id_, name.data()), 1, GL_FALSE, glm::value_ptr(value));
 }
 
 void Shader::checkShaderCompileError(GLuint shader_id, const std::string_view error_type)
