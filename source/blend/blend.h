@@ -47,8 +47,6 @@ private:
     GLuint floor_vbo_;
     GLuint transparent_vao_;
     GLuint transparent_vbo_;
-    // GLuint window_vao_;
-    // GLuint window_vbo_;
 
     bool blend_;
 
