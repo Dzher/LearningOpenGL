@@ -138,6 +138,7 @@ void glInstance::withInstance()
         glfwSwapBuffers(context_);
         glfwPollEvents();
     }
+    glfwTerminate();
 }
 
 void glInstance::withoutInstance()

@@ -21,6 +21,7 @@ public:
 
     static void configAndBindTexture(GLuint& texture, const std::string& file_name, bool flip = false,
                                      const std::string& model_folder = "");
+    static void configAndBind3DTexture(GLuint& texture, const std::string& group_name);
     static void setTextureIndex(const GLuint& program_id, const std::string& texture, GLuint index);
     static void activeTexture(const GLuint& texture, GLenum index = GL_TEXTURE0);
 };

@@ -2,9 +2,8 @@
 
 int main()
 {
-    SkyBox skybox = SkyBox("Blending", 800, 600);
+    SkyBox skybox = SkyBox("Skybox", 800, 600);
 
-    skybox.dropOrBlend(true);
     skybox.setMouseCb();
     skybox.run();
 

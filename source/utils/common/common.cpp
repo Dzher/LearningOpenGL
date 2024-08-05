@@ -120,6 +120,38 @@ void CommonFunc::configAndBindTexture(GLuint& texture, const std::string& file_n
     stbi_image_free(data);
 }
 
+void CommonFunc::configAndBind3DTexture(GLuint& texture, const std::string& group_name)
+{
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
+
+    std::vector<std::string> faces{"right.jpg", "left.jpg", "top.jpg", "bottom.jpg", "front.jpg", "back.jpg"};
+    std::string group_path = utils::PathHelper::getImagePath(group_name) + '/';
+    int width, height, nrChannels;
+    for (unsigned int index = 0; index < faces.size(); ++index)
+    {
+        std::string each_face_path = group_path + faces[index];
+        unsigned char* data = stbi_load(each_face_path.c_str(), &width, &height, &nrChannels, 0);
+        if (data)
+        {
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + index, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                         data);
+            stbi_image_free(data);
+        }
+        else
+        {
+            std::cout << "Cubemap texture failed to load at path: " << faces[index] << std::endl;
+            stbi_image_free(data);
+        }
+    }
+
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+}
+
 void CommonFunc::setTextureIndex(const GLuint& program_id, const std::string& name, GLuint index)
 {
     glUseProgram(program_id);
