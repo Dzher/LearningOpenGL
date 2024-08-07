@@ -52,3 +52,7 @@ Go ahead!
 `2024-8-01` complete the `blend` chapter
 
 `2024-8-02` complete the `face culling` chapter
+
+`2024-8-05` complete the `skybox` chapter
+
+`2024-8-07` complete the `Advance Data` chapter
