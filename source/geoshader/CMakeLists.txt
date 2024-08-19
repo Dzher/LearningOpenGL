@@ -5,4 +5,4 @@ set(PRIVATE_SOURCE
 )
 
 add_executable(geoshader ${PRIVATE_SOURCE} ${GLAD_SRC})
-target_link_libraries(geoshader GLFW OPENGL_UTILS)
+target_link_libraries(geoshader GLFW OPENGL_UTILS assimp::assimp)

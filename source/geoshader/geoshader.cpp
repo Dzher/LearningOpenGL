@@ -11,6 +11,7 @@
 #include "glm/trigonometric.hpp"
 #include "utils/camera/camera.h"
 #include "utils/common/common.h"
+#include "utils/model/model.h"
 #include "utils/shader/shader.h"
 
 GeoShader::GeoShader(const std::string& title, unsigned int width, unsigned int height)
@@ -101,6 +102,37 @@ void GeoShader::drawHouse()
 
 void GeoShader::drawBoom()
 {
+    shader_ = new utils::Shader("geo_boom.vert", "geo_boom.geom", "geo_boom.frag");
+    model_ = new utils::Model("nanosuit");
+
+    while (!glfwWindowShouldClose(context_))
+    {
+        float current_frame = glfwGetTime();
+        delta_time_ = current_frame - previous_frame_;
+        previous_frame_ = current_frame;
+
+        camera_->processInput(context_, delta_time_);
+
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)width_ / (float)height_, 1.0f, 100.0f);
+        glm::mat4 view = camera_->getViewMatrix();
+        glm::mat4 model = glm::mat4(1.0f);
+
+        shader_->useShaderProgram();
+        shader_->setMatrix4fUniform("projection", projection);
+        shader_->setMatrix4fUniform("view", view);
+        shader_->setMatrix4fUniform("model", model);
+        shader_->setFloatUniform("time", current_frame);
+
+        model_->drawModel(*shader_);
+
+        glfwSwapBuffers(context_);
+        glfwPollEvents();
+    }
+
+    glfwTerminate();
 }
 
 void GeoShader::drawNormal()

@@ -12,6 +12,7 @@ namespace utils
 {
 class Camera;
 class Shader;
+class Model;
 }  // namespace utils
 
 class GeoShader
@@ -41,6 +42,7 @@ private:
     GLFWwindow* context_;
     inline static utils::Camera* camera_;
     utils::Shader* shader_;
+    utils::Model* model_;
 
     unsigned int width_;
     unsigned int height_;
