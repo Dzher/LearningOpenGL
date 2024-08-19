@@ -22,7 +22,7 @@ void build_house(vec4 position)
     gl_Position = position + vec4(0.2, 0.2, 0.0, 0.0); // 4:top-right
     EmitVertex();
     gl_Position = position + vec4(0.0, 0.4, 0.0, 0.0); // 5:top
-    fs_color = vec3(1.0, 1.0, 1.0);
+    fs_color = vec3(1.0, 1.0, 1.0); // don't change the position
     EmitVertex();
     EndPrimitive();
 }

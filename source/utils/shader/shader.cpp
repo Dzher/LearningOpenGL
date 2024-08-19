@@ -26,8 +26,8 @@ Shader::Shader(const std::string& vertex_shader_path, const std::string& geometr
                const std::string& fragment_shader_path)
 {
     GLuint vertex_shader_id = initVertexShader(vertex_shader_path);
-    GLuint fragment_shader_id = initFragmentShader(fragment_shader_path);
     GLuint geometry_shader_id = initGeometryShader(geometry_shader_path);
+    GLuint fragment_shader_id = initFragmentShader(fragment_shader_path);
 
     shader_program_id_ = glCreateProgram();
     glAttachShader(shader_program_id_, vertex_shader_id);

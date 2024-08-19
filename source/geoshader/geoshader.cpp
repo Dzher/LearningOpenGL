@@ -88,7 +88,7 @@ void GeoShader::drawHouse()
         glBindVertexArray(vao_);
 
         shader_->useShaderProgram();
-        glDrawArrays(GL_TRIANGLES, 0, 4);
+        glDrawArrays(GL_POINTS, 0, 4);
 
         glfwSwapBuffers(context_);
         glfwPollEvents();
