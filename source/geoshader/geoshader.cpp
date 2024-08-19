@@ -137,4 +137,43 @@ void GeoShader::drawBoom()
 
 void GeoShader::drawNormal()
 {
+    shader_ = new utils::Shader("firstmodel.vert", "firstmodel.frag");
+    auto normal_shader = new utils::Shader("geo_normal.vert", "geo_normal.geom", "geo_normal.frag");
+    model_ = new utils::Model("backpack");
+
+    while (!glfwWindowShouldClose(context_))
+    {
+        float current_frame = glfwGetTime();
+        delta_time_ = current_frame - previous_frame_;
+        previous_frame_ = current_frame;
+
+        camera_->processInput(context_, delta_time_);
+
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)width_ / (float)height_, 1.0f, 100.0f);
+        glm::mat4 view = camera_->getViewMatrix();
+        glm::mat4 model = glm::mat4(1.0f);
+
+        shader_->useShaderProgram();
+        shader_->setMatrix4fUniform("projection", projection);
+        shader_->setMatrix4fUniform("view", view);
+        shader_->setMatrix4fUniform("model", model);
+
+        model_->drawModel(*shader_);
+
+        normal_shader->useShaderProgram();
+        normal_shader->setMatrix4fUniform("projection", projection);
+        normal_shader->setMatrix4fUniform("view", view);
+        normal_shader->setMatrix4fUniform("model", model);
+
+        model_->drawModel(*normal_shader);
+
+        glfwSwapBuffers(context_);
+        glfwPollEvents();
+    }
+
+    glfwTerminate();
+    delete normal_shader;
 }
