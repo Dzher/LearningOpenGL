@@ -56,3 +56,7 @@ Go ahead!
 `2024-8-05` complete the `skybox` chapter
 
 `2024-8-07` complete the `Advance Data` chapter
+
+`2024-8-17` complete the `Geometry Shader` chapter
+
+`2024-8-20` complete the `Blinn-Phong Light` chapter

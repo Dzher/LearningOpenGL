@@ -21,6 +21,7 @@ public:
     void setBoolUniform(const std::string& name, const GLboolean& value);
     void setIntUniform(const std::string& name, const GLint& value);
     void setFloatUniform(const std::string& name, const GLfloat& value);
+    void setVec3Uniform(const std::string& name, const glm::vec3& value);
     void setVec3Uniform(const std::string& name, const GLfloat* value);
     void setVec3Uniform(const std::string& name, const GLfloat& r, const GLfloat& g, const GLfloat& b);
     void setMatrix4fUniform(const std::string& name, const GLfloat* value);
@@ -39,6 +40,6 @@ private:
     static constexpr std::string_view kGeometryError = "GEOMETRY";
     static constexpr std::string_view kFragmentError = "FRAGMENT";
 };
-}  // namespace utils
+} // namespace utils
 
 #endif

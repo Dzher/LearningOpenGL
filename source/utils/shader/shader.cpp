@@ -153,6 +153,14 @@ void Shader::setFloatUniform(const std::string& name, const GLfloat& value)
     glUniform1f(glGetUniformLocation(shader_program_id_, name.data()), value);
 }
 
+void Shader::setVec3Uniform(const std::string& name, const glm::vec3& value)
+{
+    auto r = value.r;
+    auto g = value.g;
+    auto b = value.b;
+    glUniform3f(glGetUniformLocation(shader_program_id_, name.data()), r, g, b);
+}
+
 void Shader::setVec3Uniform(const std::string& name, const GLfloat* value)
 {
     auto r = value[0];

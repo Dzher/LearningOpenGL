@@ -21,3 +21,5 @@ add_subdirectory(blend)
 add_subdirectory(faceculling)
 add_subdirectory(skybox)
 add_subdirectory(geoshader)
+add_subdirectory(blinnphong)
+
